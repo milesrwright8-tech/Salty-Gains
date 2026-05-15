@@ -186,6 +186,8 @@ export const treasureData: TreasureItem[] = [
   { id: "at7", name: "Gilded Relic of Ancient Fortune",category: "Artifacts", bestCompany: "Athena's Fortune", minBase: 1400, maxBase: 1550 },
   { id: "at8", name: "Villainous Skull of Ancient Fortune", category: "Artifacts", bestCompany: "Athena's Fortune", minBase: 1400, maxBase: 1550 },
 
+  { id: "at9", name: "Orb of Secrets",                category: "Artifacts", bestCompany: "Any", minBase: 20000, maxBase: null, fixedValue: true, notes: "Found in Temple Crypts at Skeleton Camps — solve the Constellation Puzzle then defeat Obsidian Skeletons. Sells to Gold Hoarders, Order of Souls, Merchant Alliance, Hunter's Call, or Reaper's Bones. Cannot be sold to Athena's Fortune." },
+
   // ─── GOLD HOARDERS ARTEFACTS ──────────────────────────────────────────────
   { id: "ar1", name: "Enchanted Lantern",   category: "Artifacts", bestCompany: "Gold Hoarders", minBase: 800,  maxBase: 1500 },
   { id: "ar2", name: "Ancient Vase",        category: "Artifacts", bestCompany: "Gold Hoarders", minBase: 1200, maxBase: 2400 },
