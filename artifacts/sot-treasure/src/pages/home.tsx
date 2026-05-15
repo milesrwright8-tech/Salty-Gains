@@ -262,18 +262,22 @@ export default function Home() {
               <SelectContent>
                 <SelectItem value="All">All Categories</SelectItem>
                 <SelectItem value="Chests">Chests (Regular)</SelectItem>
+                <SelectItem value="Shipwrecked Chests">Shipwrecked Chests</SelectItem>
                 <SelectItem value="Ashen Chests">Ashen Chests</SelectItem>
                 <SelectItem value="Coral Chests">Coral Chests</SelectItem>
                 <SelectItem value="Skulls">Skulls (Regular)</SelectItem>
                 <SelectItem value="Ashen Skulls">Ashen Skulls</SelectItem>
                 <SelectItem value="Coral Skulls">Coral Skulls</SelectItem>
+                <SelectItem value="Ghost Fleet">Ghost Fleet Loot</SelectItem>
                 <SelectItem value="Crates">Trade Good Crates</SelectItem>
                 <SelectItem value="Cargo Runs">Cargo Run Crates</SelectItem>
                 <SelectItem value="Fish">Fish</SelectItem>
                 <SelectItem value="Meat">Meat</SelectItem>
                 <SelectItem value="Gems">Mermaid Gems</SelectItem>
                 <SelectItem value="Siren Gems">Siren Gems</SelectItem>
-                <SelectItem value="Artifacts">Artifacts</SelectItem>
+                <SelectItem value="Artefacts">Artefacts</SelectItem>
+                <SelectItem value="Ashen Artefacts">Ashen Artefacts</SelectItem>
+                <SelectItem value="Coral Artefacts">Coral Artefacts</SelectItem>
                 <SelectItem value="Vault">Vault Keys</SelectItem>
                 <SelectItem value="Bounty">Reaper's Bounty</SelectItem>
                 <SelectItem value="Other">Other (Doubloon Items)</SelectItem>

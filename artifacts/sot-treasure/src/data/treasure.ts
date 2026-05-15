@@ -1,17 +1,21 @@
 export type TreasureCategory =
   | "Chests"
+  | "Shipwrecked Chests"
   | "Ashen Chests"
   | "Coral Chests"
   | "Skulls"
   | "Ashen Skulls"
   | "Coral Skulls"
+  | "Ghost Fleet"
   | "Crates"
   | "Cargo Runs"
   | "Fish"
   | "Meat"
   | "Gems"
   | "Siren Gems"
-  | "Artifacts"
+  | "Artefacts"
+  | "Ashen Artefacts"
+  | "Coral Artefacts"
   | "Vault"
   | "Bounty"
   | "Other";
@@ -73,7 +77,7 @@ export const treasureData: TreasureItem[] = [
   {
     id: "c5", name: "Skeleton Captain's Chest", category: "Chests", bestCompany: "Gold Hoarders",
     minBase: 1150, maxBase: 1550,
-    notes: "Dropped by Skeleton Captains",
+    notes: "Dropped by Skeleton Captains.",
     findLocation: "Dropped by Skeleton Captains when completing Bounty Map voyages. Also occasionally found on emergent Skeleton Ships.",
   },
   {
@@ -84,13 +88,13 @@ export const treasureData: TreasureItem[] = [
   {
     id: "c6", name: "Stronghold Chest", category: "Chests", bestCompany: "Gold Hoarders",
     minBase: 1500, maxBase: 3000,
-    notes: "Found in Fort Vaults",
+    notes: "Found in Skeleton Fort Vaults.",
     findLocation: "Inside the Fort Vault after completing a Skeleton Fort world event. Defeat all skeleton waves and the Fort Captain to claim the vault key.",
   },
   {
     id: "c7", name: "Chest of Ancient Tributes", category: "Chests", bestCompany: "Gold Hoarders",
     minBase: 3000, maxBase: 3400,
-    findLocation: "Rewarded from Gold Hoarders Wayfinder Voyages. These are multi-step voyages purchased from the Gold Hoarders representative at any Outpost.",
+    findLocation: "Rewarded from Gold Hoarders Wayfinder Voyages — multi-step voyages purchased from the Gold Hoarders representative at any Outpost.",
   },
   {
     id: "c8", name: "Chest of Sorrow", category: "Chests", bestCompany: "Gold Hoarders",
@@ -107,20 +111,20 @@ export const treasureData: TreasureItem[] = [
   {
     id: "c10", name: "Chest of Rage", category: "Chests", bestCompany: "Gold Hoarders",
     minBase: 5200, maxBase: 8800,
-    notes: "Cursed — heats up over time and sets fire to the ship. Cool it by submerging in water or pouring water on it.",
+    notes: "Cursed — heats up over time and sets fire to the ship. Cool it by submerging in water.",
     findLocation: "Rare find from X Marks the Spot maps, Riddle Maps, Messages in a Bottle, and Shipwrecks. Also found in the Fort of the Damned vault.",
   },
   {
     id: "c11", name: "Chest of Legends", category: "Chests", bestCompany: "Athena's Fortune",
     minBase: 8000, maxBase: 10000,
     notes: "Pirate Legend only — sell to the Mysterious Stranger in any Tavern.",
-    findLocation: "Obtained by completing Athena's Fortune Legendary Voyages. Requires Pirate Legend status to purchase the voyage, but any crew can sail it. Also found in the Fort of the Damned vault occasionally.",
+    findLocation: "Obtained by completing Athena's Fortune Legendary Voyages. Requires Pirate Legend status to purchase the voyage. Also found in the Fort of the Damned vault.",
   },
   {
     id: "c12", name: "Collector's Chest", category: "Chests", bestCompany: "Gold Hoarders",
     minBase: 800, maxBase: 1600,
-    notes: "Contains gems and artefacts inside worth additional gold.",
-    findLocation: "Final reward of a Riddle Map quest — the riddle leads you to a specific landmark, then a set number of steps to dig it up. Also found rarely in Shipwrecks.",
+    notes: "Contains artefacts and gems inside worth additional gold.",
+    findLocation: "Final reward from a Riddle Map quest — follow the riddle clues to a landmark, count the steps, and dig. Also found rarely in Shipwrecks.",
   },
   {
     id: "c13", name: "Humble Gift", category: "Chests", bestCompany: "Reaper's Bones",
@@ -135,11 +139,37 @@ export const treasureData: TreasureItem[] = [
     findLocation: "Found inside completed Skeleton Fort Vaults and washed up randomly on island beaches. Rarer than the Humble Gift.",
   },
 
+  // ─── SHIPWRECKED CHESTS ───────────────────────────────────────────────────
+  {
+    id: "sw1", name: "Shipwrecked Castaway's Chest", category: "Shipwrecked Chests", bestCompany: "Gold Hoarders",
+    minBase: 60, maxBase: 130,
+    notes: "Same gold value as the regular version. Counts toward the Hoarder of Barnacled Gold commendation — must sell to Gold Hoarders (not Reaper's Bones) for commendation credit.",
+    findLocation: "Found inside Shipwrecks in the open sea (look for seagulls), on defeated Skeleton Ships, or beached on island shorelines below the waterline.",
+  },
+  {
+    id: "sw2", name: "Shipwrecked Seafarer's Chest", category: "Shipwrecked Chests", bestCompany: "Gold Hoarders",
+    minBase: 140, maxBase: 260,
+    notes: "Same gold value as the regular version. Counts toward the Hoarder of Barnacled Gold commendation.",
+    findLocation: "Found inside Shipwrecks, on defeated Skeleton Ships, or beached on island shorelines.",
+  },
+  {
+    id: "sw3", name: "Shipwrecked Marauder's Chest", category: "Shipwrecked Chests", bestCompany: "Gold Hoarders",
+    minBase: 280, maxBase: 520,
+    notes: "Same gold value as the regular version. Counts toward the Hoarder of Barnacled Gold commendation.",
+    findLocation: "Found inside Shipwrecks, on defeated Skeleton Ships, or beached on island shorelines.",
+  },
+  {
+    id: "sw4", name: "Shipwrecked Captain's Chest", category: "Shipwrecked Chests", bestCompany: "Gold Hoarders",
+    minBase: 580, maxBase: 1100,
+    notes: "Same gold value as the regular version. Rarest of the Shipwrecked variants. Counts toward Hoarder of Barnacled Gold.",
+    findLocation: "Found inside Shipwrecks, on defeated Skeleton Ships, or beached on island shorelines. Much rarer than the Shipwrecked Castaway's Chest.",
+  },
+
   // ─── ASHEN CHESTS ─────────────────────────────────────────────────────────
   {
     id: "ac1", name: "Ashen Castaway's Chest", category: "Ashen Chests", bestCompany: "Gold Hoarders",
     minBase: 140, maxBase: 260,
-    findLocation: "Devil's Roar region only — from X Marks the Spot maps and Riddle Maps obtained in or near the Devil's Roar. Worth roughly 2× the regular equivalent.",
+    findLocation: "Devil's Roar region — from X Marks the Spot maps and Riddle Maps in or near the Devil's Roar. Also a small chance to appear outside the Devil's Roar. Worth roughly 2× the regular equivalent.",
   },
   {
     id: "ac2", name: "Ashen Seafarer's Chest", category: "Ashen Chests", bestCompany: "Gold Hoarders",
@@ -154,7 +184,6 @@ export const treasureData: TreasureItem[] = [
   {
     id: "ac4", name: "Ashen Captain's Chest", category: "Ashen Chests", bestCompany: "Gold Hoarders",
     minBase: 1100, maxBase: 2100,
-    notes: "Rarest standard Ashen chest.",
     findLocation: "Devil's Roar region — from higher-level Ashen voyage treasure maps. Rarely found in Shipwrecks in the Devil's Roar.",
   },
   {
@@ -171,14 +200,14 @@ export const treasureData: TreasureItem[] = [
   {
     id: "ac6", name: "Chest of the Ashen Winds", category: "Ashen Chests", bestCompany: "Gold Hoarders",
     minBase: 2500, maxBase: 5000,
-    notes: "Also usable as a fire-breath weapon — hold it and blow to shoot fire. Has limited charges.",
+    notes: "Also functions as a fire-breath weapon — hold it and blow to shoot fire. Has limited charges.",
     findLocation: "Dropped by the Ashen Winds boss during the Ashen Winds world event. Look for a large flaming skull icon on the map. The event spawns in the Devil's Roar.",
   },
   {
     id: "ac7", name: "Ashen Chest of Legends", category: "Ashen Chests", bestCompany: "Athena's Fortune",
     minBase: 8600, maxBase: 11000,
     notes: "Devil's Roar variant of the Chest of Legends.",
-    findLocation: "Obtained from Athena's Fortune Legendary Voyages that take place in the Devil's Roar region. Requires Pirate Legend status to purchase the voyage.",
+    findLocation: "Obtained from Athena's Fortune Legendary Voyages in the Devil's Roar region. Requires Pirate Legend status.",
   },
 
   // ─── CORAL CHESTS ─────────────────────────────────────────────────────────
@@ -200,12 +229,12 @@ export const treasureData: TreasureItem[] = [
   {
     id: "cc4", name: "Coral Marauder's Chest", category: "Coral Chests", bestCompany: "Gold Hoarders",
     minBase: 490, maxBase: 910,
-    findLocation: "Found inside Siren Shrines and the inner vaults of Siren Treasuries. More valuable coral chests tend to be deeper inside the structure.",
+    findLocation: "Found inside Siren Shrines and the inner vaults of Siren Treasuries.",
   },
   {
     id: "cc5", name: "Coral Captain's Chest", category: "Coral Chests", bestCompany: "Gold Hoarders",
     minBase: 980, maxBase: 1925,
-    findLocation: "Found deep inside Siren Treasuries, typically in the locked vault. Defeat the Siren enemies and use the Siren Gems to unlock the Treasury door.",
+    findLocation: "Found deep inside Siren Treasuries, typically in the locked vault. Defeat the Siren enemies and use Siren Gems to unlock the Treasury door.",
   },
 
   // ─── REGULAR SKULLS ───────────────────────────────────────────────────────
@@ -217,7 +246,7 @@ export const treasureData: TreasureItem[] = [
   {
     id: "s2", name: "Disgraced Bounty Skull", category: "Skulls", bestCompany: "Order of Souls",
     minBase: 180, maxBase: 350,
-    findLocation: "Dropped by mid-level Skeleton Captains during Bounty Map voyages. The second-lowest tier bounty skull.",
+    findLocation: "Dropped by mid-level Skeleton Captains during Bounty Map voyages.",
   },
   {
     id: "s3", name: "Hateful Bounty Skull", category: "Skulls", bestCompany: "Order of Souls",
@@ -227,13 +256,13 @@ export const treasureData: TreasureItem[] = [
   {
     id: "s4", name: "Villainous Bounty Skull", category: "Skulls", bestCompany: "Order of Souls",
     minBase: 750, maxBase: 1450,
-    findLocation: "Dropped by the toughest Skeleton Captains on high-tier Bounty Map voyages. Also found in Fort Vaults occasionally.",
+    findLocation: "Dropped by the toughest Skeleton Captains on high-tier Bounty Map voyages. Also found in Fort Vaults.",
   },
   {
     id: "s5", name: "Skeleton Captain's Skull", category: "Skulls", bestCompany: "Order of Souls",
     minBase: 850, maxBase: 2200,
-    notes: "Dropped by Skeleton Captains during bounties — value varies widely depending on the captain's rank.",
-    findLocation: "Dropped by Skeleton Captains encountered during Bounty Map voyages, Skeleton Camp raids, and randomly from emergent Skeleton Ships.",
+    notes: "Value varies widely depending on the captain's rank.",
+    findLocation: "Dropped by Skeleton Captains encountered during Bounty Map voyages, Skeleton Camp raids, and emergent Skeleton Ships.",
   },
   {
     id: "s6", name: "Stronghold Skull", category: "Skulls", bestCompany: "Order of Souls",
@@ -244,20 +273,40 @@ export const treasureData: TreasureItem[] = [
   {
     id: "s7", name: "Skull of the Damned", category: "Skulls", bestCompany: "Order of Souls",
     minBase: 1050, maxBase: 1250,
-    notes: "Ghostly variant — eerie glowing skull.",
-    findLocation: "Dropped by Ghost Skeletons during the Ghost Fleet world event. Look for a ghostly galleon spawning on the horizon.",
+    notes: "Ghostly variant — dropped by Ghost Ships during the Ghost Fleet event.",
+    findLocation: "Dropped by Ghost Flagship and Ghost Captain Ships during the Ghost Fleet world event. Look for ghostly swirling tornadoes in the sky — sail toward them and engage the ghost ships.",
   },
   {
     id: "s8", name: "Captain Skull of the Damned", category: "Skulls", bestCompany: "Order of Souls",
     minBase: 1700, maxBase: 2950,
-    notes: "Ghostly Captain variant — higher value than standard Skull of the Damned.",
-    findLocation: "Dropped by the Ghost Captain during the Ghost Fleet world event. Rarer than standard Skulls of the Damned.",
+    notes: "Ghostly Captain variant — dropped by the Ghost Captain Ship during the Ghost Fleet event.",
+    findLocation: "Dropped by the Ghost Captain Ship during the Ghost Fleet world event. One per Ghost Captain Ship encounter. Also dropped by The Burning Blade (the final flagship).",
   },
   {
     id: "s9", name: "Gold Hoarder's Skull", category: "Skulls", bestCompany: "Order of Souls",
     minBase: 10000, maxBase: null, fixedValue: true,
     notes: "Unique skull — fixed 10,000g, no emissary bonus applies.",
-    findLocation: "Dropped exclusively by the Gold Hoarder boss at the end of a Gold Hoarder Voyage (purchased from the Gold Hoarders rep at any Outpost).",
+    findLocation: "Dropped exclusively by the Gold Hoarder boss at the end of a Gold Hoarder Voyage (purchased from the Gold Hoarders rep at any Outpost). This is the final boss of the Shores of Gold Tall Tale.",
+  },
+
+  // ─── GHOST FLEET LOOT ─────────────────────────────────────────────────────
+  {
+    id: "gf1", name: "Chest of the Damned", category: "Ghost Fleet", bestCompany: "Gold Hoarders",
+    minBase: 1000, maxBase: 1160,
+    notes: "Ghostly chest — glows green. Also sells to Reaper's Bones for equal gold.",
+    findLocation: "Dropped by the Ashen Dragon Ships and The Burning Blade during the Ghost Fleet world event. Follow the ghostly swirling tornadoes on the horizon, engage and sink the ghost fleet waves.",
+  },
+  {
+    id: "gf2", name: "Ashes of the Damned", category: "Ghost Fleet", bestCompany: "Merchant Alliance",
+    minBase: 1150, maxBase: 1400,
+    notes: "Ghostly trade good crate. Also sells to Reaper's Bones for equal gold.",
+    findLocation: "Dropped by Ashen Dragon Ships and The Burning Blade during the Ghost Fleet world event. Usually 7–15 items drop from the final flagship.",
+  },
+  {
+    id: "gf3", name: "Storage Crate of the Damned", category: "Ghost Fleet", bestCompany: "Merchant Alliance",
+    minBase: 1000, maxBase: null, fixedValue: true,
+    notes: "Can be sold even when full of resources — selling it discards the contents but the crate itself is worth 1,000g.",
+    findLocation: "Dropped by Grunt Ships and Ghost Flagships during the Ghost Fleet world event. Also dropped by The Burning Blade.",
   },
 
   // ─── ASHEN SKULLS ─────────────────────────────────────────────────────────
@@ -274,7 +323,7 @@ export const treasureData: TreasureItem[] = [
   {
     id: "as3", name: "Ashen Hateful Bounty Skull", category: "Ashen Skulls", bestCompany: "Order of Souls",
     minBase: 750, maxBase: 1450,
-    findLocation: "Devil's Roar region — dropped by high-level Ashen Skeleton Captains. Worth roughly 2× the standard Hateful Skull.",
+    findLocation: "Devil's Roar region — dropped by high-level Ashen Skeleton Captains.",
   },
   {
     id: "as4", name: "Ashen Villainous Bounty Skull", category: "Ashen Skulls", bestCompany: "Order of Souls",
@@ -284,20 +333,20 @@ export const treasureData: TreasureItem[] = [
   {
     id: "as5", name: "Ashen Winds Skull", category: "Ashen Skulls", bestCompany: "Order of Souls",
     minBase: 4000, maxBase: 10000,
-    notes: "Value depends on remaining fire charges — a fully charged skull is worth much more. Also functions as a fire weapon with limited blasts.",
-    findLocation: "Dropped by the Ashen Winds boss during the Ashen Winds world event in the Devil's Roar. The event is announced on the map by a large flaming skull icon. Defeat the boss to claim the skull.",
+    notes: "Value scales with remaining fire charges. Also functions as a limited-use fire weapon.",
+    findLocation: "Dropped by the Ashen Winds boss during the Ashen Winds world event in the Devil's Roar. The event is announced on the map by a large flaming skull icon. A fully-charged skull is worth significantly more.",
   },
 
   // ─── CORAL SKULLS ─────────────────────────────────────────────────────────
   {
     id: "cs1", name: "Coral Foul Skull", category: "Coral Skulls", bestCompany: "Order of Souls",
     minBase: 158, maxBase: 315,
-    findLocation: "Found inside Siren Shrines and the vaults of Siren Treasuries. Defeat the Siren enemies guarding the area to collect them.",
+    findLocation: "Found inside Siren Shrines and the vaults of Siren Treasuries.",
   },
   {
     id: "cs2", name: "Coral Disgraced Skull", category: "Coral Skulls", bestCompany: "Order of Souls",
     minBase: 315, maxBase: 630,
-    findLocation: "Found inside Siren Shrines and Siren Treasuries. Deeper areas of the Treasury tend to hold more valuable coral skulls.",
+    findLocation: "Found inside Siren Shrines and Siren Treasuries.",
   },
   {
     id: "cs3", name: "Coral Hateful Skull", category: "Coral Skulls", bestCompany: "Order of Souls",
@@ -307,135 +356,113 @@ export const treasureData: TreasureItem[] = [
   {
     id: "cs4", name: "Coral Villainous Skull", category: "Coral Skulls", bestCompany: "Order of Souls",
     minBase: 1260, maxBase: 2520,
-    findLocation: "Found deep inside the locked vaults of Siren Treasuries. The rarest coral skull — typically only one or two spawn per Treasury run.",
+    findLocation: "Found deep inside the locked vaults of Siren Treasuries. The rarest coral skull.",
   },
 
-  // ─── TRADE GOOD CRATES ────────────────────────────────────────────────────
+  // ─── TRADE GOOD CRATES (ANIMALS) ──────────────────────────────────────────
   {
-    id: "cr1", name: "Crate of Wood", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 150, maxBase: 300,
-    findLocation: "Purchased from Merchant Alliance representatives at Outposts, or found in Shipwrecks. Delivered as part of Trade Good voyage contracts.",
-  },
-  {
-    id: "cr2", name: "Crate of Iron", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 150, maxBase: 300,
-    findLocation: "Purchased from Merchant Alliance representatives at Outposts, or found in Shipwrecks.",
-  },
-  {
-    id: "cr3", name: "Crate of Cannonballs", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 150, maxBase: 300,
-    findLocation: "Purchased from Merchant Alliance representatives at Outposts, or found in Shipwrecks.",
-  },
-  {
-    id: "cr4", name: "Crate of Rope", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 150, maxBase: 300,
-    findLocation: "Purchased from Merchant Alliance representatives at Outposts, or found in Shipwrecks.",
-  },
-  {
-    id: "cr5", name: "Crate of Tea", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 300, maxBase: 600,
-    findLocation: "Purchased from Merchant Alliance representatives at Outposts, or found in Shipwrecks. Mid-tier trade good.",
-  },
-  {
-    id: "cr6", name: "Crate of Rum", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 300, maxBase: 600,
-    findLocation: "Purchased from Merchant Alliance representatives at Outposts, or found in Shipwrecks.",
-  },
-  {
-    id: "cr7", name: "Crate of Coffee", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 350, maxBase: 700,
-    findLocation: "Purchased from Merchant Alliance representatives at Outposts, or found in Shipwrecks.",
-  },
-  {
-    id: "cr8", name: "Crate of Sugar", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 150, maxBase: 300,
-    findLocation: "Purchased from Merchant Alliance representatives at Outposts, or found in Shipwrecks.",
-  },
-  {
-    id: "cr9", name: "Crate of Cloth", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 250, maxBase: 500,
-    findLocation: "Purchased from Merchant Alliance representatives at Outposts, or found in Shipwrecks.",
-  },
-  {
-    id: "cr10", name: "Crate of Spices", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 400, maxBase: 800,
-    findLocation: "Purchased from Merchant Alliance representatives at Outposts, or found in Shipwrecks. Higher-value trade good.",
-  },
-  {
-    id: "cr11", name: "Crate of Exotic Spices", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 600, maxBase: 1200,
-    findLocation: "Purchased from Merchant Alliance representatives at Outposts. Rarer and more valuable than standard Spices.",
-  },
-  {
-    id: "cr12", name: "Crate of Silk", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 600, maxBase: 1200,
-    findLocation: "Purchased from Merchant Alliance representatives at Outposts. One of the highest-value standard trade goods.",
-  },
-  {
-    id: "cr13", name: "Crate of Fine Sugar", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 400, maxBase: 800,
-    findLocation: "Purchased from Merchant Alliance representatives at Outposts, or found in Shipwrecks.",
-  },
-  {
-    id: "cr14", name: "Crate of Explosives", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 300, maxBase: 600,
-    findLocation: "Purchased from Merchant Alliance representatives at Outposts. Handle carefully — they can explode if hit by cannon fire.",
-  },
-  {
-    id: "cr15", name: "Chicken (White Feather)", category: "Crates", bestCompany: "Merchant Alliance",
+    id: "cr15", name: "White Feathered Chicken", category: "Crates", bestCompany: "Merchant Alliance",
     minBase: 150, maxBase: null, fixedValue: true,
-    findLocation: "Catch on islands using the Merchant Alliance Animal Crate — approach slowly and crouch to avoid startling it. Commonly found on most larger islands.",
+    notes: "Common chicken variant.",
+    findLocation: "Found on most large islands. Approach slowly and crouch — chickens will run if startled. Capture using a Merchant Alliance Chicken Coop.",
   },
   {
-    id: "cr16", name: "Chicken (Ashen)", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 250, maxBase: null, fixedValue: true,
-    findLocation: "Found only on islands in or near the Devil's Roar. Rarer than standard chickens due to the hazardous environment.",
+    id: "cr15b", name: "Red Speckled Chicken", category: "Crates", bestCompany: "Merchant Alliance",
+    minBase: 200, maxBase: null, fixedValue: true,
+    notes: "Uncommon chicken variant.",
+    findLocation: "Found on most large islands. Less common than the White Feathered Chicken — check multiple islands if you can't find one. Capture using a Merchant Alliance Chicken Coop.",
   },
   {
-    id: "cr17", name: "Snake (Splashtail)", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 150, maxBase: null, fixedValue: true,
-    findLocation: "Found on larger islands. Approach from behind carefully — snakes will attack if startled. Use the Merchant Alliance crate to capture.",
-  },
-  {
-    id: "cr18", name: "Snake (Ivory)", category: "Crates", bestCompany: "Merchant Alliance",
+    id: "cr15c", name: "Black Plumed Chicken", category: "Crates", bestCompany: "Merchant Alliance",
     minBase: 300, maxBase: null, fixedValue: true,
-    findLocation: "Rare snake variant found on larger islands. Harder to spot — look in dense vegetation.",
+    notes: "Rare chicken variant.",
+    findLocation: "Found on larger islands but rare — it may take some searching. Capture using a Merchant Alliance Chicken Coop.",
   },
   {
-    id: "cr19", name: "Pig (Grunter)", category: "Crates", bestCompany: "Merchant Alliance",
-    minBase: 150, maxBase: null, fixedValue: true,
-    findLocation: "Found on larger islands. Approach slowly and crouch to capture without spoooking. Pigs are loud and will alert other enemies if startled.",
+    id: "cr15d", name: "Golden Chicken", category: "Crates", bestCompany: "Merchant Alliance",
+    minBase: 500, maxBase: null, fixedValue: true,
+    notes: "Very rare chicken variant — the most valuable.",
+    findLocation: "Spawns on large islands but is the rarest of all chickens. You may need to check many islands before finding one. Capture using a Merchant Alliance Chicken Coop.",
   },
   {
-    id: "cr20", name: "Pig (Ashen)", category: "Crates", bestCompany: "Merchant Alliance",
+    id: "cr16", name: "Ashen Chicken", category: "Crates", bestCompany: "Merchant Alliance",
     minBase: 250, maxBase: null, fixedValue: true,
-    findLocation: "Found only on islands in or near the Devil's Roar. Rarer pig variant worth more than standard.",
+    notes: "Devil's Roar variant.",
+    findLocation: "Found only on islands in or near the Devil's Roar region. Rarer than standard chickens due to the hazardous environment.",
+  },
+  {
+    id: "cr19", name: "Pink Pig", category: "Crates", bestCompany: "Merchant Alliance",
+    minBase: 150, maxBase: null, fixedValue: true,
+    notes: "Common pig variant. Must feed Fruit periodically or it will die.",
+    findLocation: "Found on most large islands. Approach slowly. Pigs are loud and may alert skeleton enemies. Capture using a Merchant Alliance Pig Crate.",
+  },
+  {
+    id: "cr19b", name: "Ashen Pig", category: "Crates", bestCompany: "Merchant Alliance",
+    minBase: 250, maxBase: null, fixedValue: true,
+    notes: "Uncommon pig variant. Must feed Fruit or it dies.",
+    findLocation: "Found only in the Devil's Roar region.",
+  },
+  {
+    id: "cr19c", name: "Black Pig", category: "Crates", bestCompany: "Merchant Alliance",
+    minBase: 300, maxBase: null, fixedValue: true,
+    notes: "Rare pig variant. Must feed Fruit or it dies.",
+    findLocation: "Found on larger islands. Rare — check multiple islands. Capture using a Merchant Alliance Pig Crate.",
+  },
+  {
+    id: "cr19d", name: "Gold Striped Pig", category: "Crates", bestCompany: "Merchant Alliance",
+    minBase: 500, maxBase: null, fixedValue: true,
+    notes: "Very rare pig variant. Must feed Fruit or it dies.",
+    findLocation: "Very rare spawn on large islands. The most valuable pig variant. Capture using a Merchant Alliance Pig Crate.",
+  },
+  {
+    id: "cr17", name: "Green Snake", category: "Crates", bestCompany: "Merchant Alliance",
+    minBase: 150, maxBase: null, fixedValue: true,
+    notes: "Common snake variant. Charm with an instrument to calm it before capture.",
+    findLocation: "Found on most large islands. They attack if startled — play your instrument to charm them first, then place in a Merchant Alliance Snake Basket.",
+  },
+  {
+    id: "cr17b", name: "Red and White Snake", category: "Crates", bestCompany: "Merchant Alliance",
+    minBase: 200, maxBase: null, fixedValue: true,
+    notes: "Uncommon snake. Charm with music first.",
+    findLocation: "Found on larger islands. Less common than the Green Snake. Charm with your instrument before capture.",
+  },
+  {
+    id: "cr17c", name: "Black Snake", category: "Crates", bestCompany: "Merchant Alliance",
+    minBase: 300, maxBase: null, fixedValue: true,
+    notes: "Rare snake. Charm with music first.",
+    findLocation: "Found on larger islands but rare. Charm with your instrument to stop it attacking, then capture in a Snake Basket.",
+  },
+  {
+    id: "cr17d", name: "Golden Snake", category: "Crates", bestCompany: "Merchant Alliance",
+    minBase: 500, maxBase: null, fixedValue: true,
+    notes: "Very rare snake — the most valuable. Charm with music first.",
+    findLocation: "Very rare spawn on large islands. The rarest snake variant. Charm with your instrument before capture.",
   },
 
   // ─── CARGO RUN CRATES ─────────────────────────────────────────────────────
   {
     id: "cg1", name: "Crate of Rum Bottles (Perfect)", category: "Cargo Runs", bestCompany: "Merchant Alliance",
     minBase: 700, maxBase: null, fixedValue: true,
-    notes: "Degrades with damage: Damaged 500g → Very Damaged 300g → Ruined 100g. Bottles break from falls and cannon hits.",
-    findLocation: "Pick up from the Merchant Alliance representative at the source Outpost listed on your Cargo Run voyage contract. Deliver to the destination Outpost before it degrades.",
+    notes: "Degrades with physical damage: Damaged 500g → Very Damaged 300g → Ruined 100g. Bottles break from falls and cannon hits.",
+    findLocation: "Pick up from the Merchant Alliance representative at the source Outpost on your Cargo Run voyage contract. Deliver to the destination before it degrades.",
   },
   {
     id: "cg2", name: "Crate of Exotic Plants (Perfect)", category: "Cargo Runs", bestCompany: "Merchant Alliance",
     minBase: 700, maxBase: null, fixedValue: true,
     notes: "Degrades when wet: Damaged 500g → Very Damaged 300g → Ruined 100g. Keep out of water.",
-    findLocation: "Pick up from the Merchant Alliance representative at the source Outpost on your Cargo Run contract. Deliver dry to the destination Outpost.",
+    findLocation: "Pick up from the Merchant Alliance representative at the source Outpost on your Cargo Run contract. Deliver dry to the destination.",
   },
   {
     id: "cg3", name: "Crate of Woven Cloth (Perfect)", category: "Cargo Runs", bestCompany: "Merchant Alliance",
     minBase: 700, maxBase: null, fixedValue: true,
     notes: "Degrades when wet: Damaged 500g → Very Damaged 300g → Ruined 100g. Keep out of water.",
-    findLocation: "Pick up from the Merchant Alliance representative at the source Outpost on your Cargo Run contract. Deliver dry to the destination Outpost.",
+    findLocation: "Pick up from the Merchant Alliance representative at the source Outpost on your Cargo Run contract. Deliver dry to the destination.",
   },
   {
     id: "cg4", name: "Ashen Crate of Rum Bottles (Perfect)", category: "Cargo Runs", bestCompany: "Merchant Alliance",
     minBase: 1400, maxBase: null, fixedValue: true,
     notes: "Devil's Roar variant. Degrades: 1,000g → 600g → 200g. Volcanic eruptions and geysers add extra risk.",
-    findLocation: "Pick up from the Merchant Alliance representative at Devil's Roar Outposts (Roaring Traders). Deliver to the destination Outpost. The volcanic hazards make these much riskier to transport.",
+    findLocation: "Pick up from the Merchant Alliance representative at Devil's Roar Outposts (Roaring Traders). Deliver to the destination. The volcanic hazards make these far riskier to transport.",
   },
   {
     id: "cg5", name: "Ashen Crate of Exotic Plants (Perfect)", category: "Cargo Runs", bestCompany: "Merchant Alliance",
@@ -450,188 +477,362 @@ export const treasureData: TreasureItem[] = [
     findLocation: "Pick up from the Merchant Alliance representative at Devil's Roar Outposts (Roaring Traders).",
   },
 
-  // ─── FISH ─────────────────────────────────────────────────────────────────
+  // ─── SPLASHTAIL ───────────────────────────────────────────────────────────
   {
-    id: "f1", name: "Splashtail (Ruby) — Common", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 25, maxBase: 40,
-    notes: "Raw: 25g | Cooked: 40g | Trophy Cooked: 100g",
-    findLocation: "Found anywhere in open water. No bait required. The most common fish in the game — catches quickly. Sell to Hunter's Call at any Seapost.",
+    id: "f-spl-ruby", name: "Splashtail (Ruby)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 40, maxBase: 100,
+    notes: "Raw 25g | Cooked 40g | Trophy Cooked 100g. Most common fish in the game.",
+    findLocation: "Anywhere in open water. No bait required. The easiest fish to catch — just cast a line anywhere.",
   },
   {
-    id: "f2", name: "Splashtail (Umber) — Rare", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 250, maxBase: 375,
-    notes: "Raw: 250g | Cooked: 375g | Trophy Cooked: 940g",
-    findLocation: "Found anywhere in open water. No bait required. Much rarer than the Ruby Splashtail — keep casting until one bites.",
+    id: "f-spl-seafoam", name: "Splashtail (Seafoam)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 75, maxBase: 190,
+    notes: "Raw 50g | Cooked 75g | Trophy Cooked 190g. Night only.",
+    findLocation: "Anywhere in open water. No bait required. Only spawns at night — won't bite during daylight hours.",
   },
   {
-    id: "f3", name: "Splashtail (Indigo)", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 75, maxBase: 115,
-    notes: "Raw: 75g | Cooked: 115g | Trophy Cooked: 285g",
-    findLocation: "Found anywhere in open water. No bait required.",
+    id: "f-spl-sunny", name: "Splashtail (Sunny)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 75, maxBase: 190,
+    notes: "Raw 50g | Cooked 75g | Trophy Cooked 190g.",
+    findLocation: "Anywhere in open water. No bait required.",
   },
   {
-    id: "f4", name: "Splashtail (Sunny / Seafoam)", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 50, maxBase: 75,
-    notes: "Raw: 50g | Cooked: 75g | Trophy Cooked: 190g | Seafoam variant only catchable at night.",
-    findLocation: "Found anywhere in open water. No bait required. Seafoam variant only appears at night.",
+    id: "f-spl-indigo", name: "Splashtail (Indigo)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 115, maxBase: 285,
+    notes: "Raw 75g | Cooked 115g | Trophy Cooked 285g.",
+    findLocation: "Anywhere in open water. No bait required.",
   },
   {
-    id: "f5", name: "Plentifin (Olive) — Common", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 100, maxBase: 150,
-    notes: "Raw: 100g | Cooked: 150g | Trophy Cooked: 375g",
-    findLocation: "Found in The Shores of Plenty region (northwest sea). Use Earthworm bait. Fish near islands in this region.",
+    id: "f-spl-umber", name: "Splashtail (Umber)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 375, maxBase: 940,
+    notes: "Raw 250g | Cooked 375g | Trophy Cooked 940g. Rare variant.",
+    findLocation: "Anywhere in open water. No bait required. Much rarer — keep casting until one bites.",
+  },
+
+  // ─── PONDIE ───────────────────────────────────────────────────────────────
+  {
+    id: "f-pon-charcoal", name: "Pondie (Charcoal)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 40, maxBase: 100,
+    notes: "Raw 25g | Cooked 40g | Trophy Cooked 100g.",
+    findLocation: "Freshwater ponds on islands ONLY — not in the ocean. No bait required. Look for inland ponds on larger islands. No other fish appear in ponds.",
   },
   {
-    id: "f6", name: "Plentifin (Bright)", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 300, maxBase: 450,
-    notes: "Raw: 300g | Cooked: 450g | Trophy Cooked: 1,125g",
-    findLocation: "Found in The Shores of Plenty region. Use Earthworm bait (dig from grass).",
+    id: "f-pon-orchid", name: "Pondie (Orchid)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 75, maxBase: 190,
+    notes: "Raw 50g | Cooked 75g | Trophy Cooked 190g.",
+    findLocation: "Freshwater ponds on islands ONLY. No bait required.",
   },
   {
-    id: "f7", name: "Plentifin (Bonedust) — Rare", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 1000, maxBase: 1500,
-    notes: "Raw: 1,000g | Cooked: 1,500g | Trophy Cooked: 3,750g | Rarest Plentifin.",
-    findLocation: "Found in The Shores of Plenty region. Use Earthworm bait. Very rare — be patient.",
+    id: "f-pon-bronze", name: "Pondie (Bronze)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 115, maxBase: 285,
+    notes: "Raw 75g | Cooked 115g | Trophy Cooked 285g.",
+    findLocation: "Freshwater ponds on islands ONLY. No bait required.",
   },
   {
-    id: "f8", name: "Ancientscale (Almond) — Common", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 100, maxBase: 150,
-    notes: "Raw: 100g | Cooked: 150g | Trophy Cooked: 375g",
-    findLocation: "Found in The Ancient Isles region (central sea). Use Leech bait (dig from shorelines).",
+    id: "f-pon-moonsky", name: "Pondie (Moonsky)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 75, maxBase: 190,
+    notes: "Raw 50g | Cooked 75g | Trophy Cooked 190g. Night only.",
+    findLocation: "Freshwater ponds on islands ONLY, and only at night. No bait required.",
   },
   {
-    id: "f9", name: "Ancientscale (Bone) — Rare", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 1000, maxBase: 1500,
-    notes: "Raw: 1,000g | Cooked: 1,500g | Trophy Cooked: 3,750g",
-    findLocation: "Found in The Ancient Isles region. Use Leech bait. Very rare variant.",
+    id: "f-pon-goldenrod", name: "Pondie (Goldenrod)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 375, maxBase: 940,
+    notes: "Raw 250g | Cooked 375g | Trophy Cooked 940g. Rare variant.",
+    findLocation: "Freshwater ponds on islands ONLY. No bait required. Very rare — be patient.",
+  },
+
+  // ─── ISLEHOPPER ───────────────────────────────────────────────────────────
+  {
+    id: "f-isl-stone", name: "Islehopper (Stone)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 160, maxBase: 400,
+    notes: "Raw 105g | Cooked 160g | Trophy Cooked 400g. Found at: Shipwreck Bay, Shark Bait Cove, Crook's Hollow, Sailor's Bounty, Cannon Cove, Fetcher's Rest.",
+    findLocation: "Fish in shallow water close to the edge of specific large islands (see Notes for island list). No bait required.",
   },
   {
-    id: "f10", name: "Ancientscale (Starshine)", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 300, maxBase: 450,
-    notes: "Raw: 300g | Cooked: 450g | Trophy Cooked: 1,125g",
-    findLocation: "Found in The Ancient Isles region. Use Leech bait.",
+    id: "f-isl-moss", name: "Islehopper (Moss)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 160, maxBase: 400,
+    notes: "Raw 105g | Cooked 160g | Trophy Cooked 400g. Found at: Ashen Reaches, Thieves' Haven, Marauder's Arch, Lone Cove, Wanderers Refuge, Ruby's Fall.",
+    findLocation: "Fish in shallow water close to the edge of specific large islands (see Notes for island list). No bait required.",
   },
   {
-    id: "f11", name: "Wildsplash (Shorestalker) — Common", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 100, maxBase: 150,
-    notes: "Raw: 100g | Cooked: 150g | Trophy Cooked: 375g",
-    findLocation: "Found in The Wilds region (northeast sea). Use Grub bait (dig from sand).",
+    id: "f-isl-honey", name: "Islehopper (Honey)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 160, maxBase: 400,
+    notes: "Raw 105g | Cooked 160g | Trophy Cooked 400g. Found at: Discovery Ridge, Plunder Valley, Kraken's Fall, Sunken Grove, Crescent Isle, The Devil's Thirst.",
+    findLocation: "Fish in shallow water close to the edge of specific large islands (see Notes for island list). No bait required.",
   },
   {
-    id: "f12", name: "Wildsplash (Muddy) — Rare", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 1000, maxBase: 1500,
-    notes: "Raw: 1,000g | Cooked: 1,500g | Trophy Cooked: 3,750g",
-    findLocation: "Found in The Wilds region. Use Grub bait. Very rare.",
+    id: "f-isl-amethyst", name: "Islehopper (Amethyst)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 160, maxBase: 400,
+    notes: "Raw 105g | Cooked 160g | Trophy Cooked 400g. Night only. Found at: Devil's Ridge, Smuggler's Bay, Mermaid's Hideaway, The Crooked Masts, Old Faithful Isle, Flintlock Peninsula, Snake Island.",
+    findLocation: "Fish at night in shallow water near the specific islands listed in Notes. No bait required.",
   },
   {
-    id: "f13", name: "Devilfish (Ashen) — Common", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 100, maxBase: 150,
-    notes: "Raw: 100g | Cooked: 150g | Trophy Cooked: 375g",
-    findLocation: "Found only in the Devil's Roar region. Use Leech bait. The volcanic eruptions and geysers make fishing here dangerous.",
+    id: "f-isl-raven", name: "Islehopper (Raven)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 1575, maxBase: 3940,
+    notes: "Raw 1,050g | Cooked 1,575g | Trophy Cooked 3,940g. Rare — can be caught at any large island.",
+    findLocation: "Near the shores of any large island. No bait required. Very rare — it can spawn at any large island but takes persistence.",
+  },
+
+  // ─── PLENTIFIN ────────────────────────────────────────────────────────────
+  {
+    id: "f-ple-olive", name: "Plentifin (Olive)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 115, maxBase: 285,
+    notes: "Raw 75g | Cooked 115g | Trophy Cooked 285g.",
+    findLocation: "Shores of Plenty region (northwest sea). Use Earthworm bait — dig from grassy areas. Fish near islands in this region.",
   },
   {
-    id: "f14", name: "Devilfish (Forsaken) — Rare", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 1000, maxBase: 1500,
-    notes: "Raw: 1,000g | Cooked: 1,500g | Trophy Cooked: 3,750g",
-    findLocation: "Found only in the Devil's Roar region. Use Leech bait. Very rare.",
+    id: "f-ple-amber", name: "Plentifin (Amber)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 225, maxBase: 565,
+    notes: "Raw 150g | Cooked 225g | Trophy Cooked 565g.",
+    findLocation: "Shores of Plenty region. Use Earthworm bait.",
   },
   {
-    id: "f15", name: "Battlegill (Jade) — Common", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 300, maxBase: 450,
-    notes: "Raw: 300g | Cooked: 450g | Trophy Cooked: 1,125g",
-    findLocation: "Found near active Skeleton Forts or Skeleton Ships — you must fish in the vicinity of an active event. Use Grub bait.",
+    id: "f-ple-cloudy", name: "Plentifin (Cloudy)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 340, maxBase: 850,
+    notes: "Raw 225g | Cooked 340g | Trophy Cooked 850g.",
+    findLocation: "Shores of Plenty region. Use Earthworm bait.",
   },
   {
-    id: "f16", name: "Battlegill (Sky) — Rare", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 1000, maxBase: 1500,
-    notes: "Raw: 1,000g | Cooked: 1,500g | Trophy Cooked: 3,750g",
-    findLocation: "Found near active Skeleton Forts or Skeleton Ships. Use Grub bait. Very rare.",
+    id: "f-ple-watery", name: "Plentifin (Watery)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 225, maxBase: 565,
+    notes: "Raw 150g | Cooked 225g | Trophy Cooked 565g. Night only.",
+    findLocation: "Shores of Plenty region. Use Earthworm bait. Only bites at night.",
   },
   {
-    id: "f17", name: "Wrecker (Rose) — Common", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 300, maxBase: 450,
-    notes: "Raw: 300g | Cooked: 450g | Trophy Cooked: 1,125g",
-    findLocation: "Found near Shipwrecks — fish in the water directly around a visible wreck. Use Earthworm bait.",
+    id: "f-ple-bonedust", name: "Plentifin (Bonedust)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 1500, maxBase: 3750,
+    notes: "Raw 1,000g | Cooked 1,500g | Trophy Cooked 3,750g. Rare variant.",
+    findLocation: "Shores of Plenty region. Use Earthworm bait. Very rare — be patient.",
+  },
+
+  // ─── WILDSPLASH ───────────────────────────────────────────────────────────
+  {
+    id: "f-wil-russet", name: "Wildsplash (Russet)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 115, maxBase: 285,
+    notes: "Raw 75g | Cooked 115g | Trophy Cooked 285g.",
+    findLocation: "The Wilds region (northeast sea). Use Earthworm bait — dig from grassy areas.",
   },
   {
-    id: "f18", name: "Wrecker (Raven) — Rare", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 1000, maxBase: 1500,
-    notes: "Raw: 1,000g | Cooked: 1,500g | Trophy Cooked: 3,750g",
-    findLocation: "Found near Shipwrecks. Use Earthworm bait. Very rare.",
+    id: "f-wil-sandy", name: "Wildsplash (Sandy)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 225, maxBase: 565,
+    notes: "Raw 150g | Cooked 225g | Trophy Cooked 565g.",
+    findLocation: "The Wilds region. Use Earthworm bait.",
   },
   {
-    id: "f19", name: "Stormfish (Ancient) — Common", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 500, maxBase: 750,
-    notes: "Raw: 500g | Cooked: 750g | Trophy Cooked: 1,875g",
-    findLocation: "Found only during active storms — sail into a storm and fish while lightning strikes. Use Leech bait. Storms spawn randomly across the map.",
+    id: "f-wil-ocean", name: "Wildsplash (Ocean)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 340, maxBase: 850,
+    notes: "Raw 225g | Cooked 340g | Trophy Cooked 850g.",
+    findLocation: "The Wilds region. Use Earthworm bait.",
   },
   {
-    id: "f20", name: "Stormfish (Twilight) — Rare", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 1500, maxBase: 2250,
-    notes: "Raw: 1,500g | Cooked: 2,250g | Trophy Cooked: 5,625g | The most valuable fish in the game.",
-    findLocation: "Found only during active storms. Use Leech bait. Extremely rare — may take many storm sessions to catch one.",
+    id: "f-wil-coral", name: "Wildsplash (Coral)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 225, maxBase: 565,
+    notes: "Raw 150g | Cooked 225g | Trophy Cooked 565g. Night only.",
+    findLocation: "The Wilds region. Use Earthworm bait. Only bites at night.",
   },
   {
-    id: "f21", name: "Islehopper (Stone) — Common", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 50, maxBase: 75,
-    notes: "Raw: 50g | Cooked: 75g | Trophy Cooked: 190g",
-    findLocation: "Found near the shores of large islands. No bait required. Fish in shallow water close to the island's edge.",
+    id: "f-wil-muddy", name: "Wildsplash (Muddy)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 1500, maxBase: 3750,
+    notes: "Raw 1,000g | Cooked 1,500g | Trophy Cooked 3,750g. Rare variant.",
+    findLocation: "The Wilds region. Use Earthworm bait. Very rare.",
+  },
+
+  // ─── ANCIENTSCALE ─────────────────────────────────────────────────────────
+  {
+    id: "f-anc-almond", name: "Ancientscale (Almond)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 115, maxBase: 285,
+    notes: "Raw 75g | Cooked 115g | Trophy Cooked 285g.",
+    findLocation: "The Ancient Isles region (central sea). Use Leech bait — dig from shorelines.",
   },
   {
-    id: "f22", name: "Islehopper (Amethyst) — Rare", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 1000, maxBase: 1500,
-    notes: "Raw: 1,000g | Cooked: 1,500g | Trophy Cooked: 3,750g",
-    findLocation: "Found near the shores of large islands. No bait required. Very rare.",
+    id: "f-anc-sapphire", name: "Ancientscale (Sapphire)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 225, maxBase: 565,
+    notes: "Raw 150g | Cooked 225g | Trophy Cooked 565g.",
+    findLocation: "The Ancient Isles region. Use Leech bait.",
   },
   {
-    id: "f23", name: "Pondie (Charcoal) — Common", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 50, maxBase: 75,
-    notes: "Raw: 50g | Cooked: 75g | Trophy Cooked: 190g",
-    findLocation: "Found ONLY in freshwater ponds on islands — not in the ocean. Use Earthworm bait. Look for inland ponds on larger islands.",
+    id: "f-anc-smoke", name: "Ancientscale (Smoke)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 340, maxBase: 850,
+    notes: "Raw 225g | Cooked 340g | Trophy Cooked 850g.",
+    findLocation: "The Ancient Isles region. Use Leech bait.",
   },
   {
-    id: "f24", name: "Pondie (Moonsky) — Rare", category: "Fish", bestCompany: "Hunter's Call",
-    minBase: 1000, maxBase: 1500,
-    notes: "Raw: 1,000g | Cooked: 1,500g | Trophy Cooked: 3,750g | Only catchable at night.",
-    findLocation: "Found ONLY in freshwater ponds on islands, and only at night. Use Earthworm bait. Very rare.",
+    id: "f-anc-starshine", name: "Ancientscale (Starshine)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 225, maxBase: 565,
+    notes: "Raw 150g | Cooked 225g | Trophy Cooked 565g. Night only.",
+    findLocation: "The Ancient Isles region. Use Leech bait. Only bites at night.",
+  },
+  {
+    id: "f-anc-bone", name: "Ancientscale (Bone)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 1500, maxBase: 3750,
+    notes: "Raw 1,000g | Cooked 1,500g | Trophy Cooked 3,750g. Rare variant.",
+    findLocation: "The Ancient Isles region. Use Leech bait. Very rare.",
+  },
+
+  // ─── DEVILFISH ────────────────────────────────────────────────────────────
+  {
+    id: "f-dev-ashen", name: "Devilfish (Ashen)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 115, maxBase: 285,
+    notes: "Raw 75g | Cooked 115g | Trophy Cooked 285g.",
+    findLocation: "Devil's Roar region ONLY. Use Grub bait — dig from sandy soil. The volcanic eruptions and geysers make fishing here dangerous.",
+  },
+  {
+    id: "f-dev-seashell", name: "Devilfish (Seashell)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 225, maxBase: 565,
+    notes: "Raw 150g | Cooked 225g | Trophy Cooked 565g.",
+    findLocation: "Devil's Roar region ONLY. Use Grub bait.",
+  },
+  {
+    id: "f-dev-lava", name: "Devilfish (Lava)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 340, maxBase: 850,
+    notes: "Raw 225g | Cooked 340g | Trophy Cooked 850g.",
+    findLocation: "Devil's Roar region ONLY. Use Grub bait.",
+  },
+  {
+    id: "f-dev-forsaken", name: "Devilfish (Forsaken)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 225, maxBase: 565,
+    notes: "Raw 150g | Cooked 225g | Trophy Cooked 565g. Night only.",
+    findLocation: "Devil's Roar region ONLY. Use Grub bait. Only bites at night.",
+  },
+  {
+    id: "f-dev-firefly", name: "Devilfish (Firefly)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 1500, maxBase: 3750,
+    notes: "Raw 1,000g | Cooked 1,500g | Trophy Cooked 3,750g. Rare variant.",
+    findLocation: "Devil's Roar region ONLY. Use Grub bait. Very rare.",
+  },
+
+  // ─── BATTLEGILL ───────────────────────────────────────────────────────────
+  {
+    id: "f-bat-sand", name: "Battlegill (Sand)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 115, maxBase: 285,
+    notes: "Raw 75g | Cooked 115g | Trophy Cooked 285g. Must fish during an active Skeleton Fort or Skeleton Fleet event.",
+    findLocation: "Fish in the water near an active Skeleton Fort world event (storm cloud over a fort) or near Skeleton Ships. Use Grub bait.",
+  },
+  {
+    id: "f-bat-sunset", name: "Battlegill (Sunset)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 225, maxBase: 565,
+    notes: "Raw 150g | Cooked 225g | Trophy Cooked 565g. Must fish near an active Skeleton event.",
+    findLocation: "Fish near an active Skeleton Fort or Skeleton Ship. Use Grub bait.",
+  },
+  {
+    id: "f-bat-sky", name: "Battlegill (Sky)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 340, maxBase: 850,
+    notes: "Raw 225g | Cooked 340g | Trophy Cooked 850g. Must fish near an active Skeleton event.",
+    findLocation: "Fish near an active Skeleton Fort or Skeleton Ship. Use Grub bait.",
+  },
+  {
+    id: "f-bat-rum", name: "Battlegill (Rum)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 225, maxBase: 565,
+    notes: "Raw 150g | Cooked 225g | Trophy Cooked 565g. Night only, near an active Skeleton event.",
+    findLocation: "Fish at night near an active Skeleton Fort or Skeleton Ship. Use Grub bait.",
+  },
+  {
+    id: "f-bat-brine", name: "Battlegill (Brine)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 1500, maxBase: 3750,
+    notes: "Raw 1,000g | Cooked 1,500g | Trophy Cooked 3,750g. Rare. Must fish near an active Skeleton event.",
+    findLocation: "Fish near an active Skeleton Fort or Skeleton Ship. Use Grub bait. Very rare.",
+  },
+
+  // ─── WRECKER ──────────────────────────────────────────────────────────────
+  {
+    id: "f-wre-rose", name: "Wrecker (Rose)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 115, maxBase: 285,
+    notes: "Raw 75g | Cooked 115g | Trophy Cooked 285g. Must fish near a Shipwreck.",
+    findLocation: "Fish in the water directly surrounding a Shipwreck (look for circling seagulls). Use Earthworm bait.",
+  },
+  {
+    id: "f-wre-moon", name: "Wrecker (Moon)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 225, maxBase: 565,
+    notes: "Raw 150g | Cooked 225g | Trophy Cooked 565g. Must fish near a Shipwreck.",
+    findLocation: "Fish near a Shipwreck. Use Earthworm bait.",
+  },
+  {
+    id: "f-wre-dawn", name: "Wrecker (Dawn)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 340, maxBase: 850,
+    notes: "Raw 225g | Cooked 340g | Trophy Cooked 850g. Must fish near a Shipwreck.",
+    findLocation: "Fish near a Shipwreck. Use Earthworm bait.",
+  },
+  {
+    id: "f-wre-blackcloud", name: "Wrecker (Blackcloud)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 1500, maxBase: 3750,
+    notes: "Raw 1,000g | Cooked 1,500g | Trophy Cooked 3,750g. Unique double condition: must be near a Shipwreck AND inside a Storm.",
+    findLocation: "Fish near a Shipwreck that is inside an active Storm. Sail into a storm, find a Shipwreck within it, and cast from there. Use Earthworm bait. One of the hardest fish to obtain.",
+  },
+  {
+    id: "f-wre-snow", name: "Wrecker (Snow)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 1875, maxBase: 4690,
+    notes: "Raw 1,250g | Cooked 1,875g | Trophy Cooked 4,690g. Most valuable Wrecker — even rarer than Blackcloud.",
+    findLocation: "Fish near a Shipwreck. Use Earthworm bait. Extremely rare — the most valuable standard Wrecker variant.",
+  },
+
+  // ─── STORMFISH ────────────────────────────────────────────────────────────
+  {
+    id: "f-str-ancient", name: "Stormfish (Ancient)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 750, maxBase: 1875,
+    notes: "Raw 500g | Cooked 750g | Trophy Cooked 1,875g. Ancient Isles region storms only.",
+    findLocation: "Fish inside an active Storm in The Ancient Isles region. Use Leech bait. Storms are indicated by the compass spinning and the ship bell ringing — sail toward the dark clouds.",
+  },
+  {
+    id: "f-str-shores", name: "Stormfish (Shores)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 750, maxBase: 1875,
+    notes: "Raw 500g | Cooked 750g | Trophy Cooked 1,875g. Shores of Plenty region storms only.",
+    findLocation: "Fish inside an active Storm in The Shores of Plenty region. Use Leech bait.",
+  },
+  {
+    id: "f-str-wild", name: "Stormfish (Wild)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 750, maxBase: 1875,
+    notes: "Raw 500g | Cooked 750g | Trophy Cooked 1,875g. The Wilds region storms only.",
+    findLocation: "Fish inside an active Storm in The Wilds region. Use Leech bait.",
+  },
+  {
+    id: "f-str-shadow", name: "Stormfish (Shadow)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 750, maxBase: 1875,
+    notes: "Raw 500g | Cooked 750g | Trophy Cooked 1,875g. Night storms, any region.",
+    findLocation: "Fish inside any active Storm at night in any region. Use Leech bait. Also catchable at permanently stormy locations like the Sea Dog Tavern or Uncharted Island N-13.",
+  },
+  {
+    id: "f-str-twilight", name: "Stormfish (Twilight)", category: "Fish", bestCompany: "Hunter's Call",
+    minBase: 2250, maxBase: 5625,
+    notes: "Raw 1,500g | Cooked 2,250g | Trophy Cooked 5,625g. The most valuable fish in the game. Any storm, any region, any time.",
+    findLocation: "Fish inside any active Storm, any region, any time of day. Use Leech bait. Extremely rare — the rarest and most valuable fish. You may sail through many storms before catching one.",
   },
 
   // ─── MEAT ─────────────────────────────────────────────────────────────────
   {
     id: "m1", name: "Chicken Meat (Cooked)", category: "Meat", bestCompany: "Hunter's Call",
     minBase: 10, maxBase: null, fixedValue: true,
-    notes: "Meat cannot be sold raw — must be cooked on a ship's stove first.",
+    notes: "Must be cooked on the ship's stove before selling.",
     findLocation: "Kill chickens on islands, then cook the raw meat on your ship's stove. Chickens are found on most larger islands.",
   },
   {
     id: "m2", name: "Pork (Cooked)", category: "Meat", bestCompany: "Hunter's Call",
     minBase: 10, maxBase: null, fixedValue: true,
-    notes: "Meat cannot be sold raw — must be cooked on a ship's stove first.",
-    findLocation: "Kill pigs on islands, then cook on your ship's stove. Pigs are found on most larger islands and are noisy — they may attract attention.",
+    notes: "Must be cooked on the ship's stove before selling.",
+    findLocation: "Kill pigs on islands, then cook on your ship's stove. Pigs are found on most larger islands — their loud squealing may attract attention.",
   },
   {
     id: "m3", name: "Snake Meat (Cooked)", category: "Meat", bestCompany: "Hunter's Call",
     minBase: 10, maxBase: null, fixedValue: true,
-    notes: "Meat cannot be sold raw — must be cooked on a ship's stove first.",
-    findLocation: "Kill snakes on islands, then cook on your ship's stove. Snakes are found on most larger islands — they'll attack if you get too close.",
+    notes: "Must be cooked on the ship's stove before selling.",
+    findLocation: "Kill snakes on islands, then cook on your ship's stove. Snakes attack if you get too close.",
   },
   {
     id: "m4", name: "Shark Meat (Cooked)", category: "Meat", bestCompany: "Hunter's Call",
     minBase: 25, maxBase: null, fixedValue: true,
-    notes: "Meat cannot be sold raw — must be cooked on a ship's stove first.",
-    findLocation: "Kill sharks that spawn in open water — they'll attack players swimming near ships. Use a sword or pistol. Cook on ship's stove before selling.",
+    notes: "Must be cooked before selling.",
+    findLocation: "Kill sharks that attack players swimming near ships in open water. Use a sword or pistol. Cook on ship's stove before selling.",
   },
   {
     id: "m5", name: "Megalodon Meat (Cooked)", category: "Meat", bestCompany: "Hunter's Call",
     minBase: 150, maxBase: null, fixedValue: true,
-    notes: "Cooked only. Equivalent Hunter's Call value to a Trophy Fish.",
-    findLocation: "Kill any Megalodon world event boss (The Shrouded Ghost, Hungering One, etc.). Megalodons spawn randomly and attack ships in open water. Multiple meat pieces drop per kill. Cook before selling.",
+    notes: "Cooked only. Multiple pieces drop per kill.",
+    findLocation: "Kill any Megalodon boss that spawns in open water (the Hungering One, Shrouded Ghost, etc.). Megalodons attack ships at sea. Cook the meat before selling.",
   },
   {
     id: "m6", name: "Kraken Meat (Cooked)", category: "Meat", bestCompany: "Hunter's Call",
     minBase: 150, maxBase: null, fixedValue: true,
-    notes: "Cooked only. Equivalent Hunter's Call value to a Trophy Fish.",
-    findLocation: "Harvest from Kraken tentacles during a Kraken world event. The Kraken spawns randomly in open water and attacks your ship. Each tentacle you defeat may drop meat. Cook before selling.",
+    notes: "Cooked only. Harvest from defeated tentacles.",
+    findLocation: "Harvest from Kraken tentacles during a Kraken world event. The Kraken spawns in open water and attacks your ship. Defeat tentacles to collect meat. Cook before selling.",
   },
 
   // ─── MERMAID GEMS ─────────────────────────────────────────────────────────
@@ -658,8 +859,8 @@ export const treasureData: TreasureItem[] = [
   {
     id: "sg1", name: "Sapphire Siren Gem", category: "Siren Gems", bestCompany: "Any",
     minBase: 1000, maxBase: null, fixedValue: true,
-    notes: "Sell to any company except Athena's Fortune.",
-    findLocation: "Dropped by Sirens and Eel-ectric Ocean Crawlers. Also found in Siren Shrines and Siren Treasuries. Used as keys to unlock the Siren Treasury vault door — you can sell them instead if not using them.",
+    notes: "Sell to any company except Athena's Fortune. Also used as keys to unlock Siren Treasury vault doors.",
+    findLocation: "Dropped by Sirens and Eel-ectric Ocean Crawlers underwater. Also found inside Siren Shrines and Siren Treasuries.",
   },
   {
     id: "sg2", name: "Emerald Siren Gem", category: "Siren Gems", bestCompany: "Any",
@@ -671,129 +872,235 @@ export const treasureData: TreasureItem[] = [
     id: "sg3", name: "Ruby Siren Gem", category: "Siren Gems", bestCompany: "Any",
     minBase: 2000, maxBase: null, fixedValue: true,
     notes: "Rarest Siren Gem. Sell to any company except Athena's Fortune.",
-    findLocation: "Dropped by Crab Ocean Crawlers. Also found in the deepest parts of Siren Treasuries. The rarest Siren Gem.",
+    findLocation: "Dropped by Crab Ocean Crawlers. Also found in the deepest parts of Siren Treasuries.",
   },
 
-  // ─── ATHENA'S FORTUNE ─────────────────────────────────────────────────────
+  // ─── ARTEFACTS — REGULAR (4 tiers, 3 items per tier) ─────────────────────
   {
-    id: "at3", name: "Box of Wondrous Secrets", category: "Artifacts", bestCompany: "Athena's Fortune",
+    id: "art-b1", name: "Ancient Goblet", category: "Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 60, maxBase: 130,
+    notes: "Bronze tier artefact.",
+    findLocation: "Found inside Collector's Chests from Riddle Map voyages, from X Marks the Spot maps, in Shipwrecks, and occasionally as random world spawns on islands.",
+  },
+  {
+    id: "art-b2", name: "Bronze Secret-Keeper", category: "Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 60, maxBase: 130,
+    notes: "Bronze tier artefact.",
+    findLocation: "Found inside Collector's Chests from Riddle Map voyages, in Shipwrecks, and as random spawns on islands.",
+  },
+  {
+    id: "art-b3", name: "Mysterious Vessel", category: "Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 60, maxBase: 130,
+    notes: "Bronze tier artefact.",
+    findLocation: "Found inside Collector's Chests from Riddle Map voyages, in Shipwrecks, and as random world spawns on islands.",
+  },
+  {
+    id: "art-s1", name: "Decorative Coffer", category: "Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 140, maxBase: 260,
+    notes: "Silver tier artefact.",
+    findLocation: "Found inside Collector's Chests from Riddle Map voyages and higher-level Gold Hoarder voyages. Also in Shipwrecks.",
+  },
+  {
+    id: "art-s2", name: "Elaborate Flagon", category: "Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 140, maxBase: 260,
+    notes: "Silver tier artefact.",
+    findLocation: "Found inside Collector's Chests from Riddle Map voyages. Also in Shipwrecks.",
+  },
+  {
+    id: "art-s3", name: "Silvered Cup", category: "Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 140, maxBase: 260,
+    notes: "Silver tier artefact.",
+    findLocation: "Found inside Collector's Chests from Riddle Map voyages. Also in Shipwrecks.",
+  },
+  {
+    id: "art-g1", name: "Gilded Chalice", category: "Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 280, maxBase: 520,
+    notes: "Gold tier artefact.",
+    findLocation: "Found inside Collector's Chests from Riddle Map voyages and Gold Hoarders Wayfinder Voyages. Also in Shipwrecks.",
+  },
+  {
+    id: "art-g2", name: "Golden Reliquary", category: "Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 280, maxBase: 520,
+    notes: "Gold tier artefact.",
+    findLocation: "Found inside Collector's Chests from Riddle Map voyages. Also in Shipwrecks and occasionally as a random island spawn.",
+  },
+  {
+    id: "art-g3", name: "Ornate Carafe", category: "Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 280, maxBase: 520,
+    notes: "Gold tier artefact.",
+    findLocation: "Found inside Collector's Chests from Riddle Map voyages. Also in Shipwrecks.",
+  },
+  {
+    id: "art-j1", name: "Adorned Receptacle", category: "Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 560, maxBase: 1100,
+    notes: "Jeweled tier artefact — highest regular artefact value.",
+    findLocation: "Found inside Collector's Chests from high-level Riddle Map voyages and Gold Hoarders Wayfinder Voyages.",
+  },
+  {
+    id: "art-j2", name: "Opulent Curio", category: "Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 560, maxBase: 1100,
+    notes: "Jeweled tier artefact.",
+    findLocation: "Found inside Collector's Chests from high-level Riddle Map voyages and Wayfinder Voyages.",
+  },
+  {
+    id: "art-j3", name: "Peculiar Relic", category: "Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 560, maxBase: 1100,
+    notes: "Jeweled tier artefact.",
+    findLocation: "Found inside Collector's Chests from high-level Riddle Map voyages and Wayfinder Voyages. Also occasionally found in Shipwrecks.",
+  },
+  {
+    id: "art-bos1", name: "Sapphire Breath of the Sea", category: "Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 4000, maxBase: null, fixedValue: true,
+    findLocation: "Found exclusively inside Siren Treasuries — the large underwater vault structures. Complete the Siren Gem puzzle to open the vault. The Sapphire variant is the most common of the three.",
+  },
+  {
+    id: "art-bos2", name: "Emerald Breath of the Sea", category: "Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 6000, maxBase: null, fixedValue: true,
+    findLocation: "Found exclusively inside Siren Treasuries. The Emerald variant is rarer than the Sapphire — not every Treasury run will yield one.",
+  },
+  {
+    id: "art-bos3", name: "Ruby Breath of the Sea", category: "Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 8000, maxBase: null, fixedValue: true,
+    notes: "Rarest and most valuable of the three Breath of the Sea variants.",
+    findLocation: "Found exclusively inside Siren Treasuries. The rarest variant — only occasionally spawns and appears in the deepest parts of the Treasury vault.",
+  },
+
+  // ─── ARTEFACTS — ASHEN (Devil's Roar) ────────────────────────────────────
+  {
+    id: "ashart-1", name: "Roaring Goblet", category: "Ashen Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 140, maxBase: 260,
+    notes: "Devil's Roar artefact — glows red/orange.",
+    findLocation: "Found inside Collector's Chests from Ashen Gold Hoarder voyages in the Devil's Roar. Also inside unlocked Ashen Chests (requires an Ashen Key), and dropped by Ashen Lords. Small chance to appear outside the Devil's Roar.",
+  },
+  {
+    id: "ashart-2", name: "Brimstone Casket", category: "Ashen Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 280, maxBase: 520,
+    notes: "Devil's Roar artefact — glows red/orange.",
+    findLocation: "Found inside Collector's Chests from Ashen voyages in the Devil's Roar. Also inside unlocked Ashen Chests and dropped by Ashen Lords.",
+  },
+  {
+    id: "ashart-3", name: "Devil's Remnant", category: "Ashen Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 560, maxBase: 1100,
+    notes: "Devil's Roar artefact — glows red/orange.",
+    findLocation: "Found inside Collector's Chests from higher-level Ashen voyages in the Devil's Roar. Also from Ashen Lords and inside Ashen Chests.",
+  },
+  {
+    id: "ashart-4", name: "Magma's Grail", category: "Ashen Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 1100, maxBase: 2100,
+    notes: "Rarest and most valuable Devil's Roar artefact.",
+    findLocation: "Found inside Collector's Chests from high-level Ashen Gold Hoarder voyages. Also occasionally dropped by Ashen Lords and found inside Ashen Chests.",
+  },
+
+  // ─── ARTEFACTS — CORAL ────────────────────────────────────────────────────
+  {
+    id: "corart-1", name: "Mysterious Coral Vessel", category: "Coral Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 105, maxBase: 228,
+    notes: "Coral-encrusted artefact from Siren locations.",
+    findLocation: "Found inside Siren Shrines and Siren Treasuries. Dive underwater and search the coral structures.",
+  },
+  {
+    id: "corart-2", name: "Silvered Coral Cup", category: "Coral Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 245, maxBase: 455,
+    notes: "Coral artefact from Siren locations.",
+    findLocation: "Found inside Siren Shrines and the vaults of Siren Treasuries.",
+  },
+  {
+    id: "corart-3", name: "Golden Coral Reliquary", category: "Coral Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 490, maxBase: 910,
+    notes: "Coral artefact from Siren locations.",
+    findLocation: "Found inside Siren Shrines and the locked vaults of Siren Treasuries. Use Siren Gems to unlock the vault door.",
+  },
+  {
+    id: "corart-4", name: "Peculiar Coral Relic", category: "Coral Artefacts", bestCompany: "Gold Hoarders",
+    minBase: 980, maxBase: 1925,
+    notes: "Rarest coral artefact — highest value of the four types.",
+    findLocation: "Found deep inside locked Siren Treasury vaults. The rarest coral artefact — only one or two may spawn per Treasury run.",
+  },
+
+  // ─── ATHENA'S FORTUNE ARTEFACTS ───────────────────────────────────────────
+  {
+    id: "at3", name: "Box of Wondrous Secrets", category: "Artefacts", bestCompany: "Athena's Fortune",
     minBase: 25000, maxBase: null, fixedValue: true,
-    findLocation: "Extremely rare reward from Athena's Fortune Legendary Voyages. Also found in the Fort of the Damned vault on rare occasions. Requires Pirate Legend status.",
+    findLocation: "Extremely rare reward from Athena's Fortune Legendary Voyages. Occasionally found in the Fort of the Damned vault. Requires Pirate Legend status.",
   },
   {
-    id: "at4", name: "Skull of Siren Song", category: "Artifacts", bestCompany: "Athena's Fortune",
+    id: "at4", name: "Skull of Siren Song", category: "Artefacts", bestCompany: "Athena's Fortune",
     minBase: 10000, maxBase: 15000,
-    findLocation: "Obtained from Athena's Fortune Legendary Voyages. Requires Pirate Legend status to purchase the voyage.",
+    findLocation: "Obtained from Athena's Fortune Legendary Voyages. Requires Pirate Legend status.",
   },
   {
-    id: "at5", name: "Chalice of Ancient Tributes", category: "Artifacts", bestCompany: "Athena's Fortune",
+    id: "at5", name: "Chalice of Ancient Tributes", category: "Artefacts", bestCompany: "Athena's Fortune",
     minBase: 6000, maxBase: 9000,
     findLocation: "Obtained from Athena's Fortune Legendary Voyages. Requires Pirate Legend status.",
   },
   {
-    id: "at6", name: "Keg of Ancient Black Powder", category: "Artifacts", bestCompany: "Athena's Fortune",
+    id: "at6", name: "Keg of Ancient Black Powder", category: "Artefacts", bestCompany: "Athena's Fortune",
     minBase: 3000, maxBase: 5000,
-    notes: "Explosive — glows green. Do not drop or shoot it.",
-    findLocation: "Obtained from Athena's Fortune Legendary Voyages. Requires Pirate Legend status. Handle with extreme care — it explodes on impact.",
+    notes: "Explosive — glows green. Handle with extreme care, it explodes on impact.",
+    findLocation: "Obtained from Athena's Fortune Legendary Voyages. Requires Pirate Legend status.",
   },
   {
-    id: "at7", name: "Gilded Relic of Ancient Fortune", category: "Artifacts", bestCompany: "Athena's Fortune",
+    id: "at7", name: "Gilded Relic of Ancient Fortune", category: "Artefacts", bestCompany: "Athena's Fortune",
     minBase: 1400, maxBase: 1550,
-    findLocation: "Found inside Collector's Chests obtained through Athena's Fortune Legendary Voyages.",
+    findLocation: "Found inside Collector's Chests from Athena's Fortune Legendary Voyages. Also from Fort of Fortune vaults.",
   },
   {
-    id: "at8", name: "Villainous Skull of Ancient Fortune", category: "Artifacts", bestCompany: "Athena's Fortune",
+    id: "at8", name: "Villainous Skull of Ancient Fortune", category: "Artefacts", bestCompany: "Athena's Fortune",
     minBase: 1400, maxBase: 1550,
-    findLocation: "Found inside Collector's Chests from Athena's Fortune Legendary Voyages, or as a rare drop during legendary quests.",
+    findLocation: "Found inside Collector's Chests from Athena's Fortune Legendary Voyages.",
   },
   {
-    id: "at9", name: "Orb of Secrets", category: "Artifacts", bestCompany: "Any",
+    id: "at9", name: "Orb of Secrets", category: "Artefacts", bestCompany: "Any",
     minBase: 20000, maxBase: null, fixedValue: true,
     notes: "Cannot be sold to Athena's Fortune.",
-    findLocation: "Found in the Temple Crypt beneath Skeleton Camps. Solve the Constellation Puzzle on the Spinning Stones above the crypt door (find and trace 3 constellations), then defeat the Obsidian Skeleton waves to access the crypt. The Orb sits on an altar inside.",
-  },
-
-  // ─── GOLD HOARDERS ARTEFACTS ──────────────────────────────────────────────
-  {
-    id: "ar1", name: "Enchanted Lantern", category: "Artifacts", bestCompany: "Gold Hoarders",
-    minBase: 800, maxBase: 1500,
-    findLocation: "Found as rewards from Gold Hoarders Riddle Map voyages and X Marks the Spot maps. Also occasionally found in Shipwrecks and Collector's Chests.",
-  },
-  {
-    id: "ar2", name: "Ancient Vase", category: "Artifacts", bestCompany: "Gold Hoarders",
-    minBase: 1200, maxBase: 2400,
-    findLocation: "Found as rewards from Gold Hoarders Riddle Map voyages. Also found in Shipwrecks and Collector's Chests.",
-  },
-  {
-    id: "ar3", name: "Jar of Dirt", category: "Artifacts", bestCompany: "Gold Hoarders",
-    minBase: 500, maxBase: 1000,
-    findLocation: "Found as rewards from Gold Hoarders voyages, in Shipwrecks, and inside Collector's Chests. Also dropped by certain skeleton encounters.",
-  },
-  {
-    id: "ar4", name: "Totem", category: "Artifacts", bestCompany: "Gold Hoarders",
-    minBase: 150, maxBase: 300,
-    findLocation: "Found buried on islands via X Marks the Spot and Riddle Maps. Also found in Shipwrecks. Totems are also used to unlock Treasure Vault doors — if you're not using it, sell it.",
-  },
-  {
-    id: "ar5", name: "Relic", category: "Artifacts", bestCompany: "Gold Hoarders",
-    minBase: 2000, maxBase: 4000,
-    findLocation: "Found as rewards from Gold Hoarders Riddle Maps and Wayfinder Voyages. Also found inside Collector's Chests and occasionally in Shipwrecks.",
-  },
-  {
-    id: "ar6", name: "Trinket", category: "Artifacts", bestCompany: "Gold Hoarders",
-    minBase: 100, maxBase: 500,
-    notes: "Found inside Collector's Chests.",
-    findLocation: "Found inside Collector's Chests — open one up and search the contents. Collector's Chests are the reward at the end of Riddle Map voyages.",
-  },
-  {
-    id: "ar7", name: "Breath of the Sea", category: "Artifacts", bestCompany: "Gold Hoarders",
-    minBase: 2000, maxBase: 4000,
-    findLocation: "Found exclusively inside Siren Treasuries — the large underwater vault structures. Complete the Siren Gem puzzle to open the vault and claim the Breath of the Sea from within.",
+    findLocation: "Found in the Temple Crypt beneath Skeleton Camps. Solve the Constellation Puzzle on the Spinning Stones above the crypt door (trace 3 constellations), then defeat the Obsidian Skeleton waves to access the crypt. The Orb sits on an altar inside.",
   },
 
   // ─── VAULT KEYS ───────────────────────────────────────────────────────────
   {
     id: "vk1", name: "Stone Treasure Vault Key", category: "Vault", bestCompany: "Gold Hoarders",
-    minBase: 1200, maxBase: null, fixedValue: true,
-    findLocation: "Obtained from Gold Hoarders Wayfinder Voyages (Pirate tier). The voyage is a multi-step quest that concludes with a key. Use it to open a Treasure Vault on a nearby island — or sell it directly to Gold Hoarders if you don't want to run the vault.",
+    minBase: 3750, maxBase: 5000,
+    notes: "7 totem types: Boar (Devil's Ridge), Crab (N-13), Moon (Crescent Isle), Scarab (Crook's Hollow), Snake (Mermaid's Hideaway), Shark (Kraken's Fall), Eagle (Fetcher's Rest / Ashen Reach). Sell or use to open the matching vault.",
+    findLocation: "Obtained from Gold Hoarders Pirate-tier Wayfinder Voyages. The voyage uses a Golden Wayfinder Compass to find Torn Map Parchments, which reveal an X on a large island. Dig it up for a Collector's Chest containing the key.",
   },
   {
     id: "vk2", name: "Gold Treasure Vault Key", category: "Vault", bestCompany: "Gold Hoarders",
-    minBase: 3500, maxBase: null, fixedValue: true,
-    findLocation: "Obtained from Gold Hoarders Wayfinder Voyages (Captain tier — higher-level version). Opens a more valuable vault. Sell directly to Gold Hoarders if not running the vault.",
+    minBase: 9000, maxBase: 12000,
+    notes: "Higher-tier key. Same 7 totem types as the Stone Key but opens a more valuable vault with more loot inside.",
+    findLocation: "Obtained from Gold Hoarders Captain-tier Wayfinder Voyages. Higher-level version of the Pirate voyage — follow the Wayfinder Compass to Torn Map Parchments and dig up the Collector's Chest.",
   },
 
   // ─── REAPER'S BONES ───────────────────────────────────────────────────────
   {
     id: "r1", name: "Reaper's Chest", category: "Bounty", bestCompany: "Reaper's Bones",
     minBase: 5000, maxBase: 12000,
-    notes: "ONLY sell to the Masked Stranger at The Reaper's Hideout.",
-    findLocation: "Spawns randomly on islands across the sea — it glows red and can be seen from a distance. Also found in Skeleton Fort Vaults. The location of all active Reaper's Chests is visible to all crews on the map, making them high-risk targets.",
+    notes: "ONLY sells to the Masked Stranger at The Reaper's Hideout (center of the map).",
+    findLocation: "Spawns randomly on islands — glows red and visible from a distance. Also found in Skeleton Fort Vaults. Its location is visible to ALL crews on the map, making it a high-risk item to carry.",
   },
   {
     id: "r2", name: "Reaper's Bounty", category: "Bounty", bestCompany: "Reaper's Bones",
     minBase: 10000, maxBase: 20000,
-    notes: "ONLY sell to the Masked Stranger at The Reaper's Hideout.",
-    findLocation: "Spawns randomly on islands — glows gold and is visible to all crews on the map, making it extremely contested. Much rarer than the Reaper's Chest. Sail quickly to The Reaper's Hideout to sell before another crew steals it.",
+    notes: "ONLY sells to the Masked Stranger at The Reaper's Hideout.",
+    findLocation: "Rare random world spawn on islands — glows gold and visible to ALL crews on the map. Much rarer than the Reaper's Chest. Sell fast — every crew can see exactly where it is.",
   },
   {
     id: "r3", name: "Reaper's Chest of Legend", category: "Bounty", bestCompany: "Reaper's Bones",
     minBase: 20000, maxBase: 35000,
     notes: "Rare high-value Reaper's Bones exclusive.",
-    findLocation: "Extremely rare world spawn — appears on islands like the standard Reaper's Chest but is much harder to find. Also occasionally found in Fort of the Damned vaults. Visible to all crews on the map.",
+    findLocation: "Extremely rare world spawn on islands — like the Reaper's Chest but much harder to find. Also occasionally found in Fort of the Damned vaults. Visible to all crews on the map.",
   },
 
-  // ─── BILGE RATS / DOUBLOON ITEMS ──────────────────────────────────────────
+  // ─── OTHER ────────────────────────────────────────────────────────────────
   {
     id: "br1", name: "Ashen Key", category: "Other", bestCompany: "Bilge Rats",
     minBase: 0, maxBase: null, fixedValue: true, doubloons: true,
     notes: "5 Doubloons (Bilge Rats) or 10 Doubloons + Rep (Reaper's Bones). Used to unlock Ashen Chests.",
-    findLocation: "Dropped by Ashen Skeleton Key Masters in the Devil's Roar. These captains carry keys on their belts and can be spotted by their glowing appearance. Also found in Ashen voyages and occasionally in Devil's Roar Shipwrecks.",
+    findLocation: "Dropped by Ashen Skeleton Key Masters in the Devil's Roar — captains that glow and carry a key on their belt. Also found in Ashen voyages and occasionally in Devil's Roar Shipwrecks.",
   },
   {
     id: "br2", name: "Ashen Chest (Locked)", category: "Other", bestCompany: "Bilge Rats",
     minBase: 0, maxBase: null, fixedValue: true, doubloons: true,
-    notes: "5 Doubloons to Bilge Rats or Reaper's Bones. Unlock with an Ashen Key to access the 3 Ashen Tomes inside.",
-    findLocation: "Found buried on Devil's Roar islands via X Marks the Spot and Riddle Maps, or dropped by enemies during Ashen voyages. Always contains 3 Ashen Tomes when unlocked.",
+    notes: "5 Doubloons to Bilge Rats or Reaper's Bones. Unlock with an Ashen Key to get 3 Ashen Tomes inside worth additional gold.",
+    findLocation: "Found buried on Devil's Roar islands via X Marks the Spot and Riddle Maps, or dropped during Ashen voyages. Always contains 3 Ashen Tomes when unlocked with an Ashen Key.",
   },
 ];
