@@ -144,26 +144,37 @@ function TreasureRow({ item, index }: { item: Item; index: number }) {
               </div>
             )}
 
-            {/* Where to find / sell */}
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                Where to Sell
-              </p>
-              <p className="text-sm text-foreground mb-3">
-                {item.bestCompany === "Any"
-                  ? "Sells to most Trading Companies — Gold Hoarders, Order of Souls, Merchant Alliance, Hunter's Call, or Reaper's Bones."
-                  : item.bestCompany === "Bilge Rats"
-                    ? "Sell to the Bilge Rats representative at any Outpost, or to Reaper's Bones for extra reputation."
-                    : `Sell to ${item.bestCompany} representatives at any Outpost${item.bestCompany === "Athena's Fortune" ? " (Mysterious Stranger in any Tavern)" : ""}.${item.bestCompany !== "Reaper's Bones" ? " Reaper's Bones also accepts this item." : ""}`}
-              </p>
+            {/* Where to find + sell */}
+            <div className="space-y-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+                  Where to Find
+                </p>
+                <p className="text-sm text-foreground leading-snug">
+                  {item.findLocation}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+                  Where to Sell
+                </p>
+                <p className="text-sm text-foreground leading-snug">
+                  {item.bestCompany === "Any"
+                    ? "Sells to most Trading Companies — Gold Hoarders, Order of Souls, Merchant Alliance, Hunter's Call, or Reaper's Bones."
+                    : item.bestCompany === "Bilge Rats"
+                      ? "Sell to the Bilge Rats representative at any Outpost, or to Reaper's Bones for extra doubloons and reputation."
+                      : `Sell to ${item.bestCompany} representatives${item.bestCompany === "Athena's Fortune" ? " — find the Mysterious Stranger in any Tavern" : " at any Outpost"}.${item.bestCompany !== "Reaper's Bones" && item.bestCompany !== "Athena's Fortune" ? " Reaper's Bones at The Reaper's Hideout also accepts this." : ""}`}
+                </p>
+              </div>
 
               {item.notes && (
-                <>
+                <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
                     Notes
                   </p>
                   <p className="text-sm text-muted-foreground leading-snug">{item.notes}</p>
-                </>
+                </div>
               )}
             </div>
 
