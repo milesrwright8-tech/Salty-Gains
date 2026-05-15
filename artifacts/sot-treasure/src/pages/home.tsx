@@ -223,7 +223,7 @@ export default function Home() {
   }, [search, category, company, sortBy]);
 
   return (
-    <div className="min-h-[100dvh] bg-background text-foreground flex flex-col">
+    <div className="min-h-[100dvh] bg-background text-foreground flex flex-col overflow-x-hidden">
 
       {/* ── Header ── */}
       <header className="w-full border-b border-border bg-card/80 backdrop-blur-sm sticky top-0 z-10 shadow-lg">
