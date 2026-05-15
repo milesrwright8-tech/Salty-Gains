@@ -2,6 +2,12 @@
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
