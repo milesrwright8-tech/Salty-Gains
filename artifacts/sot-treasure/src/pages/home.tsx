@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { treasureData, TreasureCategory, Company } from "@/data/treasure";
+import { treasureData, TreasureCategory, TreasureItem, Company } from "@/data/treasure";
 import { Search, ChevronDown, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -30,7 +30,7 @@ const ALL_COMPANIES: Company[] = [
 ];
 
 const fmt   = (n: number) => Math.round(n).toLocaleString();
-const range = (item: ReturnType<typeof treasureData[0]["id"] extends string ? typeof treasureData[number] : never>, mult: number): string => {
+const range = (item: TreasureItem, mult: number): string => {
   if (item.doubloons) return item.notes?.match(/\d+ Doubloon[s]?/)?.[0] ?? "Doubloons";
   if (item.maxBase)   return `${fmt(item.minBase * mult)} – ${fmt(item.maxBase * mult)} g`;
   return `${fmt(item.minBase * mult)} g`;
@@ -280,6 +280,8 @@ export default function Home() {
                 <SelectItem value="Coral Artefacts">Coral Artefacts</SelectItem>
                 <SelectItem value="Vault">Vault Keys</SelectItem>
                 <SelectItem value="Bounty">Reaper's Bounty</SelectItem>
+                <SelectItem value="Manifests">Merchant Manifests</SelectItem>
+                <SelectItem value="Emissary Flags">Emissary Flags</SelectItem>
                 <SelectItem value="Other">Other (Doubloon Items)</SelectItem>
               </SelectContent>
             </Select>

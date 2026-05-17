@@ -18,6 +18,8 @@ export type TreasureCategory =
   | "Coral Artefacts"
   | "Vault"
   | "Bounty"
+  | "Manifests"
+  | "Emissary Flags"
   | "Other";
 
 export type Company =
@@ -798,41 +800,42 @@ export const treasureData: TreasureItem[] = [
   },
 
   // ─── MEAT ─────────────────────────────────────────────────────────────────
+  // minBase = raw value, maxBase = cooked value. Burned always sells for 1g.
   {
-    id: "m1", name: "Chicken Meat (Cooked)", category: "Meat", bestCompany: "Hunter's Call",
-    minBase: 10, maxBase: null, fixedValue: true,
-    notes: "Must be cooked on the ship's stove before selling.",
-    findLocation: "Kill chickens on islands, then cook the raw meat on your ship's stove. Chickens are found on most larger islands.",
+    id: "m1", name: "Chicken Meat", category: "Meat", bestCompany: "Hunter's Call",
+    minBase: 7, maxBase: 10,
+    notes: "Raw 7g | Cooked 10g | Burned 1g. Sell raw instantly or cook on the ship's stove for more gold.",
+    findLocation: "Kill chickens found on most larger islands. Approach slowly — chickens bolt if startled. Sell raw to Hunter's Call at any Seapost, or cook on your ship's stove first for higher gold.",
   },
   {
-    id: "m2", name: "Pork (Cooked)", category: "Meat", bestCompany: "Hunter's Call",
-    minBase: 10, maxBase: null, fixedValue: true,
-    notes: "Must be cooked on the ship's stove before selling.",
-    findLocation: "Kill pigs on islands, then cook on your ship's stove. Pigs are found on most larger islands — their loud squealing may attract attention.",
+    id: "m2", name: "Pork", category: "Meat", bestCompany: "Hunter's Call",
+    minBase: 7, maxBase: 10,
+    notes: "Raw 7g | Cooked 10g | Burned 1g. Sell raw instantly or cook for more gold.",
+    findLocation: "Kill pigs found on most larger islands. Their loud squealing may alert skeleton enemies. Sell raw or cook on ship's stove before selling to Hunter's Call at a Seapost.",
   },
   {
-    id: "m3", name: "Snake Meat (Cooked)", category: "Meat", bestCompany: "Hunter's Call",
-    minBase: 10, maxBase: null, fixedValue: true,
-    notes: "Must be cooked on the ship's stove before selling.",
-    findLocation: "Kill snakes on islands, then cook on your ship's stove. Snakes attack if you get too close.",
+    id: "m3", name: "Snake Meat", category: "Meat", bestCompany: "Hunter's Call",
+    minBase: 7, maxBase: 10,
+    notes: "Raw 7g | Cooked 10g | Burned 1g. Sell raw instantly or cook for more gold.",
+    findLocation: "Kill snakes found on most larger islands. Snakes attack if you get close — play your instrument to charm them first, or simply kill them. Sell raw or cooked to Hunter's Call.",
   },
   {
-    id: "m4", name: "Shark Meat (Cooked)", category: "Meat", bestCompany: "Hunter's Call",
-    minBase: 25, maxBase: null, fixedValue: true,
-    notes: "Must be cooked before selling.",
-    findLocation: "Kill sharks that attack players swimming near ships in open water. Use a sword or pistol. Cook on ship's stove before selling.",
+    id: "m4", name: "Shark Meat", category: "Meat", bestCompany: "Hunter's Call",
+    minBase: 15, maxBase: 25,
+    notes: "Raw 15g | Cooked 25g | Burned 1g. Several pieces drop per shark.",
+    findLocation: "Kill sharks that attack you when swimming near ships in open water. Use a sword or pistol. Multiple pieces drop per kill. Sell raw or cook on your ship's stove before selling to Hunter's Call.",
   },
   {
-    id: "m5", name: "Megalodon Meat (Cooked)", category: "Meat", bestCompany: "Hunter's Call",
-    minBase: 150, maxBase: null, fixedValue: true,
-    notes: "Cooked only. Multiple pieces drop per kill.",
-    findLocation: "Kill any Megalodon boss that spawns in open water (the Hungering One, Shrouded Ghost, etc.). Megalodons attack ships at sea. Cook the meat before selling.",
+    id: "m5", name: "Megalodon Meat", category: "Meat", bestCompany: "Hunter's Call",
+    minBase: 100, maxBase: 150,
+    notes: "Raw 100g | Cooked 150g | Burned 1g. Multiple pieces drop per kill — 4–5 pieces from a full kill.",
+    findLocation: "Kill any Megalodon boss (the Hungering One, Shrouded Ghost, Ancient Terror, etc.) that spawns in open water and attacks ships. Multiple pieces drop. Cook on the ship's stove for maximum value.",
   },
   {
-    id: "m6", name: "Kraken Meat (Cooked)", category: "Meat", bestCompany: "Hunter's Call",
-    minBase: 150, maxBase: null, fixedValue: true,
-    notes: "Cooked only. Harvest from defeated tentacles.",
-    findLocation: "Harvest from Kraken tentacles during a Kraken world event. The Kraken spawns in open water and attacks your ship. Defeat tentacles to collect meat. Cook before selling.",
+    id: "m6", name: "Kraken Meat", category: "Meat", bestCompany: "Hunter's Call",
+    minBase: 100, maxBase: 150,
+    notes: "Raw 100g | Cooked 150g | Burned 1g. Harvested from each defeated tentacle — fight hard for more pieces.",
+    findLocation: "Harvest from Kraken tentacles during a Kraken world event. The Kraken spawns unpredictably in open water and grabs your ship. Defeat tentacles to collect meat; the more tentacles you kill, the more pieces you get.",
   },
 
   // ─── MERMAID GEMS ─────────────────────────────────────────────────────────
@@ -1090,7 +1093,92 @@ export const treasureData: TreasureItem[] = [
     findLocation: "Extremely rare world spawn on islands — like the Reaper's Chest but much harder to find. Also occasionally found in Fort of the Damned vaults. Visible to all crews on the map.",
   },
 
+  // ─── MERCHANT MANIFESTS ───────────────────────────────────────────────────
+  {
+    id: "mf1", name: "Prosperous Manifest", category: "Manifests", bestCompany: "Merchant Alliance",
+    minBase: 1600, maxBase: 2800,
+    findLocation: "Found inside sunken Merchant Alliance vessels — follow the Lost Shipment compass from a Merchant Alliance Lost Shipment voyage to locate the wreck. Dive down to the cargo hold to retrieve the manifest.",
+  },
+  {
+    id: "mf2", name: "Esteemed Manifest", category: "Manifests", bestCompany: "Merchant Alliance",
+    minBase: 2400, maxBase: 3200,
+    findLocation: "Found inside sunken Merchant Alliance vessels on Lost Shipment voyages. Rarer than the Prosperous Manifest — you may need multiple dives to find one.",
+  },
+  {
+    id: "mf3", name: "Eminent Manifest", category: "Manifests", bestCompany: "Merchant Alliance",
+    minBase: 3200, maxBase: 4000,
+    findLocation: "Found inside sunken Merchant Alliance vessels on Lost Shipment voyages. One of the rarer manifest grades.",
+  },
+  {
+    id: "mf4", name: "Grand Manifest", category: "Manifests", bestCompany: "Merchant Alliance",
+    minBase: 4000, maxBase: 5600,
+    notes: "Highest-value manifest. Rare find even from high-tier Lost Shipment voyages.",
+    findLocation: "Found inside sunken Merchant Alliance vessels on Lost Shipment voyages. The rarest and most valuable manifest grade.",
+  },
+
+  // ─── EMISSARY FLAGS ───────────────────────────────────────────────────────
+  {
+    id: "ef1", name: "Emissary Flag (Grade I)", category: "Emissary Flags", bestCompany: "Reaper's Bones",
+    minBase: 1600, maxBase: 2400,
+    notes: "Dropped when you sink a ship flying a Grade I emissary flag. Sell ONLY to Reaper's Bones at The Reaper's Hideout.",
+    findLocation: "Dropped by player ships sailing as a Grade I emissary for any trading company. Attack and sink the emissary ship to claim the flag. Sell to the Masked Stranger at The Reaper's Hideout.",
+  },
+  {
+    id: "ef2", name: "Emissary Flag (Grade II)", category: "Emissary Flags", bestCompany: "Reaper's Bones",
+    minBase: 3500, maxBase: 4900,
+    notes: "Dropped from Grade II emissary ships. Sell ONLY to Reaper's Bones.",
+    findLocation: "Dropped by player ships sailing as a Grade II emissary. Sink the emissary vessel to claim the flag, then sell to The Reaper's Hideout.",
+  },
+  {
+    id: "ef3", name: "Emissary Flag (Grade III)", category: "Emissary Flags", bestCompany: "Reaper's Bones",
+    minBase: 5500, maxBase: 7600,
+    notes: "Dropped from Grade III emissary ships. Sell ONLY to Reaper's Bones.",
+    findLocation: "Dropped by player ships sailing as a Grade III emissary. A mid-tier flag worth targeting if you can win the fight.",
+  },
+  {
+    id: "ef4", name: "Emissary Flag (Grade IV)", category: "Emissary Flags", bestCompany: "Reaper's Bones",
+    minBase: 7600, maxBase: 10500,
+    notes: "Dropped from Grade IV emissary ships. Sell ONLY to Reaper's Bones.",
+    findLocation: "Dropped by player ships sailing as a Grade IV emissary. A high-value target — Grade IV emissaries have been collecting treasure for a while and carry a valuable flag.",
+  },
+  {
+    id: "ef5", name: "Emissary Flag (Grade V)", category: "Emissary Flags", bestCompany: "Reaper's Bones",
+    minBase: 9500, maxBase: 25000,
+    notes: "Dropped from Grade V emissary ships. Value varies by company — Athena's Fortune Grade V flags fetch the highest price. Sell ONLY to Reaper's Bones.",
+    findLocation: "Dropped by player ships that have reached Grade V emissary status (maximum grade). These ships carry a visible glowing flag visible across the sea. The highest-value flag in the game — but Grade V crews will fight hard to keep it.",
+  },
+
   // ─── OTHER ────────────────────────────────────────────────────────────────
+  {
+    id: "rs1", name: "Ritual Skull", category: "Other", bestCompany: "Bilge Rats",
+    minBase: 0, maxBase: null, fixedValue: true, doubloons: true,
+    notes: "10 Doubloons to Bilge Rats/Larinna. Primary use: one of 6 ritual skulls needed (each matching a Flame of Fate) to activate the Fort of the Damned world event.",
+    findLocation: "Found randomly on island beaches, inside Shipwrecks, and occasionally dropped by Skeleton Captains. Six coloured variants exist (one per Flame of Fate). Collect from the world and bring to the Fort of the Damned, or sell to Larinna for Doubloons.",
+  },
+  {
+    id: "at10", name: "Tome of Curses", category: "Other", bestCompany: "Bilge Rats",
+    minBase: 0, maxBase: null, fixedValue: true, doubloons: true,
+    notes: "10 Doubloons to Bilge Rats/Larinna. Found inside unlocked Ashen Chests.",
+    findLocation: "Contained inside Ashen Chests — use an Ashen Key to unlock one. Three tomes of various types are found in each Ashen Chest. Sell to Larinna (the Bilge Rats representative) at any Outpost tavern.",
+  },
+  {
+    id: "at11", name: "Tome of Power", category: "Other", bestCompany: "Bilge Rats",
+    minBase: 0, maxBase: null, fixedValue: true, doubloons: true,
+    notes: "10 Doubloons to Bilge Rats/Larinna. Found inside unlocked Ashen Chests.",
+    findLocation: "Contained inside Ashen Chests — use an Ashen Key to unlock one. Each Ashen Chest contains 3 Ashen Tomes of random types.",
+  },
+  {
+    id: "at12", name: "Tome of Fire", category: "Other", bestCompany: "Bilge Rats",
+    minBase: 0, maxBase: null, fixedValue: true, doubloons: true,
+    notes: "10 Doubloons to Bilge Rats/Larinna. Found inside unlocked Ashen Chests.",
+    findLocation: "Contained inside Ashen Chests — use an Ashen Key to unlock one. Each Ashen Chest contains 3 Ashen Tomes of random types.",
+  },
+  {
+    id: "at13", name: "Tome of Resurrection", category: "Other", bestCompany: "Bilge Rats",
+    minBase: 0, maxBase: null, fixedValue: true, doubloons: true,
+    notes: "10 Doubloons to Bilge Rats/Larinna. Found inside unlocked Ashen Chests.",
+    findLocation: "Contained inside Ashen Chests — use an Ashen Key to unlock one. Each Ashen Chest contains 3 Ashen Tomes of random types.",
+  },
   {
     id: "br1", name: "Ashen Key", category: "Other", bestCompany: "Bilge Rats",
     minBase: 0, maxBase: null, fixedValue: true, doubloons: true,
@@ -1100,7 +1188,7 @@ export const treasureData: TreasureItem[] = [
   {
     id: "br2", name: "Ashen Chest (Locked)", category: "Other", bestCompany: "Bilge Rats",
     minBase: 0, maxBase: null, fixedValue: true, doubloons: true,
-    notes: "5 Doubloons to Bilge Rats or Reaper's Bones. Unlock with an Ashen Key to get 3 Ashen Tomes inside worth additional gold.",
+    notes: "5 Doubloons to Bilge Rats or Reaper's Bones. Unlock with an Ashen Key to get 3 Ashen Tomes inside worth additional Doubloons.",
     findLocation: "Found buried on Devil's Roar islands via X Marks the Spot and Riddle Maps, or dropped during Ashen voyages. Always contains 3 Ashen Tomes when unlocked with an Ashen Key.",
   },
 ];
