@@ -1,38 +1,45 @@
 # Sea of Thieves Treasure Guide
 
-A static reference app listing every treasure item in Sea of Thieves with base gold values, best company to sell to, and emissary grade multipliers (I–V).
+A static reference app listing every treasure item in Sea of Thieves with gold values, best company, and emissary grade multipliers.
 
 ## Requirements
 
-- Node.js 18 or newer
+- Node.js 18 or newer (`node --version` to check)
 - npm (comes with Node.js)
 
-## Setup
+## Setup — do this once
 
 ```bash
 npm install
 ```
 
-## Development (live-reload server)
+## Option A: Dev server (simplest, with live reload)
 
 ```bash
-npm run dev
+npm start
 ```
 
-Then open `http://<your-pi-ip>:5173` in a browser on any device on the same network.
+Open `http://<your-pi-ip>:5173` in any browser on the same network.
 
-## Production build + serve
+## Option B: Build once, then serve (better for always-on hosting)
 
 ```bash
 npm run build
 npm run preview
 ```
 
-Then open `http://<your-pi-ip>:4173` in a browser.
+Open `http://<your-pi-ip>:4173` in any browser on the same network.
 
-The `preview` command serves the optimised production build and listens on all interfaces so any device on your network can reach it.
+## Option C: Use npx serve (after building)
 
-## Optional: serve with nginx or another static server
+```bash
+npm run build
+npx serve dist
+```
 
-After `npm run build` the output is in the `dist/` folder — plain HTML/CSS/JS files.  
-You can point nginx, Caddy, or any static file server at that folder instead of using `npm run preview`.
+A `serve.json` file is included so that routes work correctly.  
+Open the URL that `npx serve` prints — usually `http://localhost:3000`.
+
+---
+
+**Tip:** to find your Pi's IP address, run `hostname -I` on the Pi.
