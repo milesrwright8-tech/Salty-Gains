@@ -1,30 +1,32 @@
 # Sea of Thieves Treasure Guide
 
-Reference app listing all 185 treasure items in Sea of Thieves — gold values, best company to sell to, emissary grade multipliers, where to find, and where to sell.
+Reference app listing all 185 treasure items — gold values, best company, emissary multipliers, where to find, where to sell.
 
-## Quick start
+## Setup (do once)
 
 ```bash
 npm install
+npm run build
+```
+
+## Start the server
+
+```bash
 npm start
 ```
 
-Open `http://localhost:5173` — or on another device on the same network, use `http://<your-ip>:5173`.
+Open `http://localhost:3000` — or on another device on the same network use `http://<your-ip>:3000`.
 
-## Production build
-
-```bash
-npm run build
-npm run preview
-```
-
-Then open `http://<your-ip>:4173`.
-
-## Serve the built files with any static server
+Set a custom port with the `PORT` environment variable:
 
 ```bash
-npm run build
-npx serve dist
+PORT=8080 npm start
 ```
 
-A `serve.json` is included so client-side routing works correctly.
+## Development (live reload)
+
+```bash
+npm run dev
+```
+
+Then open `http://localhost:5173`.
