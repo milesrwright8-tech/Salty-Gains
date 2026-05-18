@@ -2,22 +2,16 @@
 
 Reference app listing all 185 treasure items — gold values, best company, emissary multipliers, where to find, where to sell.
 
-## Setup (do once)
+## Setup & start
 
 ```bash
 npm install
-npm run build
-```
-
-## Start the server
-
-```bash
 npm start
 ```
 
-Open `http://localhost:3000` — or on another device on the same network use `http://<your-ip>:3000`.
+Open `http://localhost:3000`. The first run builds the app automatically; subsequent starts are instant.
 
-Set a custom port with the `PORT` environment variable:
+## Custom port
 
 ```bash
 PORT=8080 npm start
@@ -28,5 +22,3 @@ PORT=8080 npm start
 ```bash
 npm run dev
 ```
-
-Then open `http://localhost:5173`.
