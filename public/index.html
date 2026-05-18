@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sea of Thieves — Treasure Ledger</title>
+<style>
+:root{--bg:#0f172a;--card:#1e293b;--border:rgba(148,163,184,0.15);--text:#e2e8f0;--muted:#94a3b8;--primary:#f59e0b;--hdr:rgba(30,41,59,0.97)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;font-size:14px;overflow-x:hidden}
+header{position:sticky;top:0;z-index:10;background:var(--hdr);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:14px 16px}
+.hdr-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px}
+h1{font-size:1.4rem;font-weight:700;color:var(--primary);font-family:Georgia,serif}
+.sub{font-size:.72rem;color:var(--muted);margin-top:2px}
+#count{font-size:.72rem;color:var(--muted);white-space:nowrap;align-self:flex-end;padding-bottom:2px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(min-width:768px){.controls{grid-template-columns:2fr 1fr 1fr 1fr}}
+.sw{position:relative;grid-column:span 2}
+@media(min-width:768px){.sw{grid-column:span 1}}
+.sw svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;width:14px;height:14px}
+.sw input{padding-left:30px}
+.controls input,.controls select{background:var(--bg);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:13px;width:100%;height:36px}
+.controls input:focus,.controls select:focus{outline:2px solid var(--primary);outline-offset:-1px}
+main{max-width:960px;margin:14px auto;padding:0 8px}
+.wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.4)}
+.col-hdr{display:flex;align-items:center;gap:12px;padding:7px 16px;background:rgba(15,23,42,.6);border-bottom:1px solid var(--border);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.col-ch{width:16px;flex-shrink:0}
+.col-n{flex:1}
+.col-c{flex-shrink:0;width:140px;display:none}
+.col-v{flex-shrink:0;min-width:110px;text-align:right}
+@media(min-width:640px){.col-c{display:block}}
+.row{border-bottom:1px solid var(--border)}
+.row:last-child{border-bottom:none}
+.row:nth-child(even) .rbtn{background:rgba(15,23,42,.4)}
+.rbtn{width:100%;display:flex;align-items:center;gap:12px;padding:10px 16px;background:none;border:none;color:inherit;cursor:pointer;text-align:left;transition:background .1s}
+.rbtn:hover{background:rgba(148,163,184,.07)!important}
+.ch{flex-shrink:0;color:var(--muted);width:16px;font-size:10px}
+.iname{font-weight:500;font-size:13px}
+.icat{margin-left:6px;font-size:11px;color:var(--muted)}
+.nw{flex:1;min-width:0}
+.bdg{flex-shrink:0;width:140px;display:none}
+@media(min-width:640px){.bdg{display:block}}
+.bdg span{display:inline-block;padding:2px 8px;border-radius:9999px;border:1px solid;font-size:11px}
+.vw{flex-shrink:0;min-width:110px;text-align:right}
+.vb{font-size:13px;color:var(--muted)}
+.vgv{display:block;font-size:11px;color:var(--primary);opacity:.8}
+.exp{padding:10px 16px 14px;border-top:1px solid var(--border);background:rgba(148,163,184,.03);display:none}
+.row.open .exp{display:block}
+.row.open .ch::after{content:'▼'}
+.row:not(.open) .ch::after{content:'▶'}
+.ei{margin-left:28px;display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:640px){.ei{grid-template-columns:1fr 1fr}}
+.es h4{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:7px}
+.gr{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+.gv{color:var(--primary);font-weight:700}
+.gl{color:var(--muted)}
+.es p{font-size:13px;line-height:1.5}
+.es+.es{margin-top:0}
+.sep{margin:8px 0}
+.empty{padding:48px 16px;text-align:center;color:var(--muted);font-style:italic}
+footer{margin-top:10px;text-align:center;font-size:11px;color:var(--muted);padding-bottom:20px}
+.co-gh{color:#fcd34d;border-color:rgba(234,179,8,.5);background:rgba(120,83,0,.2)}
+.co-oos{color:#c4b5fd;border-color:rgba(167,139,250,.5);background:rgba(88,28,135,.2)}
+.co-ma{color:#93c5fd;border-color:rgba(147,197,253,.5);background:rgba(30,58,138,.2)}
+.co-rb{color:#fca5a5;border-color:rgba(248,113,113,.5);background:rgba(127,29,29,.2)}
+.co-af{color:#67e8f9;border-color:rgba(103,232,249,.5);background:rgba(8,51,68,.2)}
+.co-hc{color:#86efac;border-color:rgba(134,239,172,.5);background:rgba(20,83,45,.2)}
+.co-br{color:#fdba74;border-color:rgba(251,146,60,.5);background:rgba(124,45,18,.2)}
+.co-any{color:#cbd5e1;border-color:rgba(148,163,184,.4);background:rgba(30,41,59,.4)}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr-top">
+    <div>
+      <h1>Sea of Thieves — Treasure Ledger</h1>
+      <p class="sub">Click any item to expand emissary grade values and selling details. Grade V always gives <strong style="color:var(--primary)">2.5×</strong> the base value.</p>
+    </div>
+    <span id="count"></span>
+  </div>
+  <div class="controls">
+    <div class="sw">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input id="search" placeholder="Search treasure...">
+    </div>
+    <select id="cat">
+      <option value="">All Categories</option>
+      <option>Chests</option><option>Shipwrecked Chests</option><option>Ashen Chests</option><option>Coral Chests</option>
+      <option>Skulls</option><option>Ashen Skulls</option><option>Coral Skulls</option><option>Ghost Fleet</option>
+      <option>Crates</option><option>Cargo Runs</option><option>Fish</option><option>Meat</option>
+      <option>Gems</option><option>Siren Gems</option><option>Artefacts</option><option>Ashen Artefacts</option>
+      <option>Coral Artefacts</option><option>Vault</option><option>Bounty</option><option>Manifests</option>
+      <option>Emissary Flags</option><option>Other</option>
+    </select>
+    <select id="co">
+      <option value="">All Companies</option>
+      <option>Gold Hoarders</option><option>Order of Souls</option><option>Merchant Alliance</option>
+      <option>Reaper's Bones</option><option>Athena's Fortune</option><option>Hunter's Call</option><option>Bilge Rats</option>
+    </select>
+    <select id="sort">
+      <option value="base">Sort by Value (High → Low)</option>
+      <option value="name">Sort by Name (A → Z)</option>
+    </select>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <div class="col-hdr">
+      <span class="col-ch"></span>
+      <span class="col-n">Item / Category</span>
+      <span class="col-c">Best Company</span>
+      <span class="col-v">Base &amp; Grade V</span>
+    </div>
+    <div id="list"></div>
+  </div>
+  <footer>Multipliers: Grade I = 1.0× · Grade II = 1.33× · Grade III = 1.66× · Grade IV = 2.0× · Grade V = 2.5× &nbsp;|&nbsp; Reaper's Bones emissary applies to all treasure types.</footer>
+</main>
+<script>
+const D=[
+// ── CHESTS ──
+{id:"c1",name:"Castaway's Chest",cat:"Chests",co:"Gold Hoarders",min:60,max:130,find:"X Marks the Spot maps, Riddle Maps, Messages in a Bottle, emergent Shipwrecks, and random world spawns on islands. The most common chest in the game."},
+{id:"c2",name:"Seafarer's Chest",cat:"Chests",co:"Gold Hoarders",min:140,max:260,find:"X Marks the Spot maps, Riddle Maps, Messages in a Bottle, and Shipwrecks. Slightly rarer than the Castaway's Chest."},
+{id:"c3",name:"Marauder's Chest",cat:"Chests",co:"Gold Hoarders",min:280,max:520,find:"X Marks the Spot maps, Riddle Maps, Messages in a Bottle, and Shipwrecks. Found on mid-difficulty voyages."},
+{id:"c4",name:"Captain's Chest",cat:"Chests",co:"Gold Hoarders",min:560,max:1100,find:"X Marks the Spot maps, Riddle Maps, Messages in a Bottle, and Shipwrecks. Obtained from higher-level Gold Hoarder voyages."},
+{id:"c5",name:"Skeleton Captain's Chest",cat:"Chests",co:"Gold Hoarders",min:1150,max:1550,notes:"Dropped by Skeleton Captains.",find:"Dropped by Skeleton Captains when completing Bounty Map voyages. Also occasionally found on emergent Skeleton Ships."},
+{id:"c5b",name:"King's Chest",cat:"Chests",co:"Gold Hoarders",min:2000,max:3100,find:"Found in emergent Shipwrecks (look for seagulls circling above water) and as rewards from Messages in a Bottle quests. Cannot be obtained from standard Gold Hoarder voyages."},
+{id:"c6",name:"Stronghold Chest",cat:"Chests",co:"Gold Hoarders",min:1500,max:3000,notes:"Found in Skeleton Fort Vaults.",find:"Inside the Fort Vault after completing a Skeleton Fort world event. Defeat all skeleton waves and the Fort Captain to claim the vault key."},
+{id:"c7",name:"Chest of Ancient Tributes",cat:"Chests",co:"Gold Hoarders",min:3000,max:3400,find:"Rewarded from Gold Hoarders Wayfinder Voyages — multi-step voyages purchased from the Gold Hoarders representative at any Outpost."},
+{id:"c8",name:"Chest of Sorrow",cat:"Chests",co:"Gold Hoarders",min:5200,max:8800,notes:"Cursed — weeps water, flooding the ship. Extinguish by placing it in a rowboat or tossing overboard temporarily.",find:"Rare find from X Marks the Spot maps, Riddle Maps, Messages in a Bottle, and Shipwrecks. Can also be won from the Fort of the Damned vault."},
+{id:"c9",name:"Chest of a Thousand Grogs",cat:"Chests",co:"Gold Hoarders",min:5200,max:8800,notes:"Cursed — intoxicates the carrier, causing loss of movement control.",find:"Rare find from X Marks the Spot maps, Riddle Maps, Messages in a Bottle, and Shipwrecks."},
+{id:"c10",name:"Chest of Rage",cat:"Chests",co:"Gold Hoarders",min:5200,max:8800,notes:"Cursed — heats up over time and sets fire to the ship. Cool it by submerging in water.",find:"Rare find from X Marks the Spot maps, Riddle Maps, Messages in a Bottle, and Shipwrecks. Also found in the Fort of the Damned vault."},
+{id:"c11",name:"Chest of Legends",cat:"Chests",co:"Athena's Fortune",min:8000,max:10000,notes:"Pirate Legend only — sell to the Mysterious Stranger in any Tavern.",find:"Obtained by completing Athena's Fortune Legendary Voyages. Requires Pirate Legend status. Also found in the Fort of the Damned vault."},
+{id:"c12",name:"Collector's Chest",cat:"Chests",co:"Gold Hoarders",min:800,max:1600,notes:"Contains artefacts and gems inside worth additional gold.",find:"Final reward from a Riddle Map quest. Also found rarely in Shipwrecks."},
+{id:"c13",name:"Humble Gift",cat:"Chests",co:"Reaper's Bones",min:0,max:0,dbl:true,notes:"5 Doubloons — sell only to Reaper's Bones.",find:"Found inside completed Skeleton Fort Vaults and washed up randomly on island beaches. Can also be found in emergent Shipwrecks."},
+{id:"c14",name:"Generous Gift",cat:"Chests",co:"Reaper's Bones",min:0,max:0,dbl:true,notes:"10 Doubloons — sell only to Reaper's Bones.",find:"Found inside completed Skeleton Fort Vaults and washed up randomly on island beaches. Rarer than the Humble Gift."},
+// ── SHIPWRECKED CHESTS ──
+{id:"sw1",name:"Shipwrecked Castaway's Chest",cat:"Shipwrecked Chests",co:"Gold Hoarders",min:60,max:130,notes:"Counts toward the Hoarder of Barnacled Gold commendation — must sell to Gold Hoarders for commendation credit.",find:"Found inside Shipwrecks in the open sea, on defeated Skeleton Ships, or beached on island shorelines below the waterline."},
+{id:"sw2",name:"Shipwrecked Seafarer's Chest",cat:"Shipwrecked Chests",co:"Gold Hoarders",min:140,max:260,notes:"Counts toward the Hoarder of Barnacled Gold commendation.",find:"Found inside Shipwrecks, on defeated Skeleton Ships, or beached on island shorelines."},
+{id:"sw3",name:"Shipwrecked Marauder's Chest",cat:"Shipwrecked Chests",co:"Gold Hoarders",min:280,max:520,notes:"Counts toward the Hoarder of Barnacled Gold commendation.",find:"Found inside Shipwrecks, on defeated Skeleton Ships, or beached on island shorelines."},
+{id:"sw4",name:"Shipwrecked Captain's Chest",cat:"Shipwrecked Chests",co:"Gold Hoarders",min:580,max:1100,notes:"Rarest of the Shipwrecked variants. Counts toward Hoarder of Barnacled Gold.",find:"Found inside Shipwrecks, on defeated Skeleton Ships, or beached on island shorelines."},
+// ── ASHEN CHESTS ──
+{id:"ac1",name:"Ashen Castaway's Chest",cat:"Ashen Chests",co:"Gold Hoarders",min:140,max:260,find:"Devil's Roar region — from X Marks the Spot maps and Riddle Maps in or near the Devil's Roar. Worth roughly 2× the regular equivalent."},
+{id:"ac2",name:"Ashen Seafarer's Chest",cat:"Ashen Chests",co:"Gold Hoarders",min:280,max:520,find:"Devil's Roar region — from Ashen voyage treasure maps and Messages in a Bottle found in the Devil's Roar."},
+{id:"ac3",name:"Ashen Marauder's Chest",cat:"Ashen Chests",co:"Gold Hoarders",min:560,max:1100,find:"Devil's Roar region — from Ashen voyage treasure maps and emergent Shipwrecks in the Devil's Roar."},
+{id:"ac4",name:"Ashen Captain's Chest",cat:"Ashen Chests",co:"Gold Hoarders",min:1100,max:2100,find:"Devil's Roar region — from higher-level Ashen voyage treasure maps. Rarely found in Shipwrecks in the Devil's Roar."},
+{id:"ac4b",name:"Ashen King's Chest",cat:"Ashen Chests",co:"Gold Hoarders",min:3800,max:0,notes:"Devil's Roar variant of the King's Chest.",find:"Devil's Roar region — emergent Shipwrecks and Messages in a Bottle in the Devil's Roar area."},
+{id:"ac5",name:"Ashen Stronghold Chest",cat:"Ashen Chests",co:"Gold Hoarders",min:3000,max:6000,find:"Inside the Vault of the Fort of Fortune world event in the Devil's Roar. Defeat all skeleton waves and the Fort Captain to access the vault."},
+{id:"ac6",name:"Chest of the Ashen Winds",cat:"Ashen Chests",co:"Gold Hoarders",min:2500,max:5000,notes:"Also functions as a fire-breath weapon — hold it and blow to shoot fire. Has limited charges.",find:"Dropped by the Ashen Winds boss during the Ashen Winds world event. Look for a large flaming skull icon on the map. The event spawns in the Devil's Roar."},
+{id:"ac7",name:"Ashen Chest of Legends",cat:"Ashen Chests",co:"Athena's Fortune",min:8600,max:11000,notes:"Devil's Roar variant of the Chest of Legends.",find:"Obtained from Athena's Fortune Legendary Voyages in the Devil's Roar region. Requires Pirate Legend status."},
+// ── CORAL CHESTS ──
+{id:"cc1",name:"Coral Castaway's Chest",cat:"Coral Chests",co:"Gold Hoarders",min:105,max:228,find:"Found underwater in Siren Shrines and inside the vaults of Siren Treasuries. Dive beneath the waves and look for glowing coral formations marking the entrance."},
+{id:"cc2",name:"Coral Seafarer's Chest",cat:"Coral Chests",co:"Gold Hoarders",min:245,max:455,find:"Found inside Siren Shrines and Siren Treasuries. Complete the underwater puzzle to open the Treasury vault."},
+{id:"cc3",name:"Coral Treasure Chest",cat:"Coral Chests",co:"Gold Hoarders",min:375,max:780,find:"Found inside Siren Shrines and Siren Treasuries scattered across the sea floor."},
+{id:"cc4",name:"Coral Marauder's Chest",cat:"Coral Chests",co:"Gold Hoarders",min:490,max:910,find:"Found inside Siren Shrines and the inner vaults of Siren Treasuries."},
+{id:"cc5",name:"Coral Captain's Chest",cat:"Coral Chests",co:"Gold Hoarders",min:980,max:1925,find:"Found deep inside Siren Treasuries, typically in the locked vault. Defeat the Siren enemies and use Siren Gems to unlock the Treasury door."},
+// ── SKULLS ──
+{id:"s1",name:"Foul Bounty Skull",cat:"Skulls",co:"Order of Souls",min:90,max:180,find:"Dropped by low-level Skeleton Captains during Order of Souls Bounty Map voyages. Also found on emergent Skeleton Ships."},
+{id:"s2",name:"Disgraced Bounty Skull",cat:"Skulls",co:"Order of Souls",min:180,max:350,find:"Dropped by mid-level Skeleton Captains during Bounty Map voyages."},
+{id:"s3",name:"Hateful Bounty Skull",cat:"Skulls",co:"Order of Souls",min:350,max:750,find:"Dropped by higher-level Skeleton Captains during Bounty Map voyages. More likely from higher-tier Order of Souls voyages."},
+{id:"s4",name:"Villainous Bounty Skull",cat:"Skulls",co:"Order of Souls",min:750,max:1450,find:"Dropped by the toughest Skeleton Captains on high-tier Bounty Map voyages. Also found in Fort Vaults."},
+{id:"s5",name:"Skeleton Captain's Skull",cat:"Skulls",co:"Order of Souls",min:850,max:2200,notes:"Value varies widely depending on the captain's rank.",find:"Dropped by Skeleton Captains encountered during Bounty Map voyages, Skeleton Camp raids, and emergent Skeleton Ships."},
+{id:"s6",name:"Stronghold Skull",cat:"Skulls",co:"Order of Souls",min:1800,max:4200,notes:"Dropped by the Fort Captain.",find:"Dropped by the Captain Skeleton when completing a Skeleton Fort world event. The Captain holds the key to the Fort Vault."},
+{id:"s7",name:"Skull of the Damned",cat:"Skulls",co:"Order of Souls",min:1050,max:1250,notes:"Ghostly variant — dropped by Ghost Ships during the Ghost Fleet event.",find:"Dropped by Ghost Flagship and Ghost Captain Ships during the Ghost Fleet world event. Look for ghostly swirling tornadoes in the sky."},
+{id:"s8",name:"Captain Skull of the Damned",cat:"Skulls",co:"Order of Souls",min:1700,max:2950,notes:"Ghostly Captain variant — dropped by the Ghost Captain Ship during the Ghost Fleet event.",find:"Dropped by the Ghost Captain Ship during the Ghost Fleet world event. Also dropped by The Burning Blade (the final flagship)."},
+{id:"s9",name:"Gold Hoarder's Skull",cat:"Skulls",co:"Order of Souls",min:10000,max:0,notes:"Unique skull — fixed 10,000g, no emissary bonus applies.",find:"Dropped exclusively by the Gold Hoarder boss at the end of a Gold Hoarder Voyage. This is the final boss of the Shores of Gold Tall Tale."},
+// ── GHOST FLEET ──
+{id:"gf1",name:"Chest of the Damned",cat:"Ghost Fleet",co:"Gold Hoarders",min:1000,max:1160,notes:"Ghostly chest — glows green. Also sells to Reaper's Bones for equal gold.",find:"Dropped by the Ashen Dragon Ships and The Burning Blade during the Ghost Fleet world event. Follow the ghostly swirling tornadoes on the horizon."},
+{id:"gf2",name:"Ashes of the Damned",cat:"Ghost Fleet",co:"Merchant Alliance",min:1150,max:1400,notes:"Ghostly trade good crate. Also sells to Reaper's Bones for equal gold.",find:"Dropped by Ashen Dragon Ships and The Burning Blade during the Ghost Fleet world event. Usually 7-15 items drop from the final flagship."},
+{id:"gf3",name:"Storage Crate of the Damned",cat:"Ghost Fleet",co:"Merchant Alliance",min:1000,max:0,notes:"Can be sold even when full of resources — selling it discards the contents but the crate itself is worth 1,000g.",find:"Dropped by Grunt Ships and Ghost Flagships during the Ghost Fleet world event. Also dropped by The Burning Blade."},
+// ── ASHEN SKULLS ──
+{id:"as1",name:"Ashen Foul Bounty Skull",cat:"Ashen Skulls",co:"Order of Souls",min:180,max:350,find:"Devil's Roar region — dropped by low-level Ashen Skeleton Captains during Ashen Bounty Map voyages."},
+{id:"as2",name:"Ashen Disgraced Bounty Skull",cat:"Ashen Skulls",co:"Order of Souls",min:350,max:750,find:"Devil's Roar region — dropped by mid-level Ashen Skeleton Captains during Ashen voyages."},
+{id:"as3",name:"Ashen Hateful Bounty Skull",cat:"Ashen Skulls",co:"Order of Souls",min:750,max:1450,find:"Devil's Roar region — dropped by high-level Ashen Skeleton Captains."},
+{id:"as4",name:"Ashen Villainous Bounty Skull",cat:"Ashen Skulls",co:"Order of Souls",min:1450,max:2800,find:"Devil's Roar region — dropped by the toughest Ashen Skeleton Captains on high-tier Ashen Bounty voyages."},
+{id:"as5",name:"Ashen Winds Skull",cat:"Ashen Skulls",co:"Order of Souls",min:4000,max:10000,notes:"Value scales with remaining fire charges. Also functions as a limited-use fire weapon.",find:"Dropped by the Ashen Winds boss during the Ashen Winds world event in the Devil's Roar. A fully-charged skull is worth significantly more."},
+// ── CORAL SKULLS ──
+{id:"cs1",name:"Coral Foul Skull",cat:"Coral Skulls",co:"Order of Souls",min:158,max:315,find:"Found inside Siren Shrines and the vaults of Siren Treasuries."},
+{id:"cs2",name:"Coral Disgraced Skull",cat:"Coral Skulls",co:"Order of Souls",min:315,max:630,find:"Found inside Siren Shrines and Siren Treasuries."},
+{id:"cs3",name:"Coral Hateful Skull",cat:"Coral Skulls",co:"Order of Souls",min:630,max:1260,find:"Found in the locked vaults of Siren Treasuries. Use Siren Gems collected from defeated Sirens to unlock the Treasury door."},
+{id:"cs4",name:"Coral Villainous Skull",cat:"Coral Skulls",co:"Order of Souls",min:1260,max:2520,find:"Found deep inside the locked vaults of Siren Treasuries. The rarest coral skull."},
+// ── CRATES (ANIMALS) ──
+{id:"cr15",name:"White Feathered Chicken",cat:"Crates",co:"Merchant Alliance",min:150,max:0,notes:"Common chicken variant.",find:"Found on most large islands. Approach slowly and crouch — chickens will run if startled. Capture using a Merchant Alliance Chicken Coop."},
+{id:"cr15b",name:"Red Speckled Chicken",cat:"Crates",co:"Merchant Alliance",min:200,max:0,notes:"Uncommon chicken variant.",find:"Found on most large islands. Less common than the White Feathered Chicken. Capture using a Merchant Alliance Chicken Coop."},
+{id:"cr15c",name:"Black Plumed Chicken",cat:"Crates",co:"Merchant Alliance",min:300,max:0,notes:"Rare chicken variant.",find:"Found on larger islands but rare. Capture using a Merchant Alliance Chicken Coop."},
+{id:"cr15d",name:"Golden Chicken",cat:"Crates",co:"Merchant Alliance",min:500,max:0,notes:"Very rare chicken variant — the most valuable.",find:"Spawns on large islands but is the rarest of all chickens. You may need to check many islands before finding one. Capture using a Merchant Alliance Chicken Coop."},
+{id:"cr16",name:"Ashen Chicken",cat:"Crates",co:"Merchant Alliance",min:250,max:0,notes:"Devil's Roar variant.",find:"Found only on islands in or near the Devil's Roar region. Rarer than standard chickens due to the hazardous environment."},
+{id:"cr19",name:"Pink Pig",cat:"Crates",co:"Merchant Alliance",min:150,max:0,notes:"Common pig variant. Must feed Fruit periodically or it will die.",find:"Found on most large islands. Approach slowly. Pigs are loud and may alert skeleton enemies. Capture using a Merchant Alliance Pig Crate."},
+{id:"cr19b",name:"Ashen Pig",cat:"Crates",co:"Merchant Alliance",min:250,max:0,notes:"Uncommon pig variant. Must feed Fruit or it dies.",find:"Found only in the Devil's Roar region."},
+{id:"cr19c",name:"Black Pig",cat:"Crates",co:"Merchant Alliance",min:300,max:0,notes:"Rare pig variant. Must feed Fruit or it dies.",find:"Found on larger islands. Rare — check multiple islands. Capture using a Merchant Alliance Pig Crate."},
+{id:"cr19d",name:"Gold Striped Pig",cat:"Crates",co:"Merchant Alliance",min:500,max:0,notes:"Very rare pig variant. Must feed Fruit or it dies.",find:"Very rare spawn on large islands. The most valuable pig variant. Capture using a Merchant Alliance Pig Crate."},
+{id:"cr17",name:"Green Snake",cat:"Crates",co:"Merchant Alliance",min:150,max:0,notes:"Common snake variant. Charm with an instrument to calm it before capture.",find:"Found on most large islands. They attack if startled — play your instrument to charm them first, then place in a Merchant Alliance Snake Basket."},
+{id:"cr17b",name:"Red and White Snake",cat:"Crates",co:"Merchant Alliance",min:200,max:0,notes:"Uncommon snake. Charm with music first.",find:"Found on larger islands. Less common than the Green Snake. Charm with your instrument before capture."},
+{id:"cr17c",name:"Black Snake",cat:"Crates",co:"Merchant Alliance",min:300,max:0,notes:"Rare snake. Charm with music first.",find:"Found on larger islands but rare. Charm with your instrument to stop it attacking, then capture in a Snake Basket."},
+{id:"cr17d",name:"Golden Snake",cat:"Crates",co:"Merchant Alliance",min:500,max:0,notes:"Very rare snake — the most valuable. Charm with music first.",find:"Very rare spawn on large islands. The rarest snake variant. Charm with your instrument before capture."},
+// ── CARGO RUNS ──
+{id:"cg1",name:"Crate of Rum Bottles (Perfect)",cat:"Cargo Runs",co:"Merchant Alliance",min:700,max:0,notes:"Degrades with physical damage: Damaged 500g → Very Damaged 300g → Ruined 100g. Bottles break from falls and cannon hits.",find:"Pick up from the Merchant Alliance representative at the source Outpost on your Cargo Run voyage contract. Deliver to the destination before it degrades."},
+{id:"cg2",name:"Crate of Exotic Plants (Perfect)",cat:"Cargo Runs",co:"Merchant Alliance",min:700,max:0,notes:"Degrades when wet: Damaged 500g → Very Damaged 300g → Ruined 100g. Keep out of water.",find:"Pick up from the Merchant Alliance representative at the source Outpost on your Cargo Run contract. Deliver dry to the destination."},
+{id:"cg3",name:"Crate of Woven Cloth (Perfect)",cat:"Cargo Runs",co:"Merchant Alliance",min:700,max:0,notes:"Degrades when wet: Damaged 500g → Very Damaged 300g → Ruined 100g. Keep out of water.",find:"Pick up from the Merchant Alliance representative at the source Outpost on your Cargo Run contract. Deliver dry to the destination."},
+{id:"cg4",name:"Ashen Crate of Rum Bottles (Perfect)",cat:"Cargo Runs",co:"Merchant Alliance",min:1400,max:0,notes:"Devil's Roar variant. Degrades: 1,000g → 600g → 200g. Volcanic eruptions and geysers add extra risk.",find:"Pick up from the Merchant Alliance representative at Devil's Roar Outposts. The volcanic hazards make these far riskier to transport."},
+{id:"cg5",name:"Ashen Crate of Exotic Plants (Perfect)",cat:"Cargo Runs",co:"Merchant Alliance",min:1400,max:0,notes:"Devil's Roar variant. Degrades: 1,000g → 600g → 200g.",find:"Pick up from the Merchant Alliance representative at Devil's Roar Outposts."},
+{id:"cg6",name:"Ashen Crate of Woven Cloth (Perfect)",cat:"Cargo Runs",co:"Merchant Alliance",min:1400,max:0,notes:"Devil's Roar variant. Degrades: 1,000g → 600g → 200g.",find:"Pick up from the Merchant Alliance representative at Devil's Roar Outposts."},
+// ── FISH ──
+{id:"f-spl-ruby",name:"Splashtail (Ruby)",cat:"Fish",co:"Hunter's Call",min:40,max:100,notes:"Raw 25g | Cooked 40g | Trophy Cooked 100g. Most common fish in the game.",find:"Anywhere in open water. No bait required. The easiest fish to catch — just cast a line anywhere."},
+{id:"f-spl-seafoam",name:"Splashtail (Seafoam)",cat:"Fish",co:"Hunter's Call",min:75,max:190,notes:"Raw 50g | Cooked 75g | Trophy Cooked 190g. Night only.",find:"Anywhere in open water. No bait required. Only spawns at night — won't bite during daylight hours."},
+{id:"f-spl-sunny",name:"Splashtail (Sunny)",cat:"Fish",co:"Hunter's Call",min:75,max:190,notes:"Raw 50g | Cooked 75g | Trophy Cooked 190g.",find:"Anywhere in open water. No bait required."},
+{id:"f-spl-indigo",name:"Splashtail (Indigo)",cat:"Fish",co:"Hunter's Call",min:115,max:285,notes:"Raw 75g | Cooked 115g | Trophy Cooked 285g.",find:"Anywhere in open water. No bait required."},
+{id:"f-spl-umber",name:"Splashtail (Umber)",cat:"Fish",co:"Hunter's Call",min:375,max:940,notes:"Raw 250g | Cooked 375g | Trophy Cooked 940g. Rare variant.",find:"Anywhere in open water. No bait required. Much rarer — keep casting until one bites."},
+{id:"f-pon-charcoal",name:"Pondie (Charcoal)",cat:"Fish",co:"Hunter's Call",min:40,max:100,notes:"Raw 25g | Cooked 40g | Trophy Cooked 100g.",find:"Freshwater ponds on islands ONLY — not in the ocean. No bait required. Look for inland ponds on larger islands."},
+{id:"f-pon-orchid",name:"Pondie (Orchid)",cat:"Fish",co:"Hunter's Call",min:75,max:190,notes:"Raw 50g | Cooked 75g | Trophy Cooked 190g.",find:"Freshwater ponds on islands ONLY. No bait required."},
+{id:"f-pon-bronze",name:"Pondie (Bronze)",cat:"Fish",co:"Hunter's Call",min:115,max:285,notes:"Raw 75g | Cooked 115g | Trophy Cooked 285g.",find:"Freshwater ponds on islands ONLY. No bait required."},
+{id:"f-pon-moonsky",name:"Pondie (Moonsky)",cat:"Fish",co:"Hunter's Call",min:75,max:190,notes:"Raw 50g | Cooked 75g | Trophy Cooked 190g. Night only.",find:"Freshwater ponds on islands ONLY, and only at night. No bait required."},
+{id:"f-pon-goldenrod",name:"Pondie (Goldenrod)",cat:"Fish",co:"Hunter's Call",min:375,max:940,notes:"Raw 250g | Cooked 375g | Trophy Cooked 940g. Rare variant.",find:"Freshwater ponds on islands ONLY. No bait required. Very rare — be patient."},
+{id:"f-isl-stone",name:"Islehopper (Stone)",cat:"Fish",co:"Hunter's Call",min:160,max:400,notes:"Raw 105g | Cooked 160g | Trophy Cooked 400g. Found at: Shipwreck Bay, Shark Bait Cove, Crook's Hollow, Sailor's Bounty, Cannon Cove, Fetcher's Rest.",find:"Fish in shallow water close to the edge of specific large islands (see Notes for island list). No bait required."},
+{id:"f-isl-moss",name:"Islehopper (Moss)",cat:"Fish",co:"Hunter's Call",min:160,max:400,notes:"Raw 105g | Cooked 160g | Trophy Cooked 400g. Found at: Ashen Reaches, Thieves' Haven, Marauder's Arch, Lone Cove, Wanderers Refuge, Ruby's Fall.",find:"Fish in shallow water close to the edge of specific large islands (see Notes for island list). No bait required."},
+{id:"f-isl-honey",name:"Islehopper (Honey)",cat:"Fish",co:"Hunter's Call",min:160,max:400,notes:"Raw 105g | Cooked 160g | Trophy Cooked 400g. Found at: Discovery Ridge, Plunder Valley, Kraken's Fall, Sunken Grove, Crescent Isle, The Devil's Thirst.",find:"Fish in shallow water close to the edge of specific large islands (see Notes for island list). No bait required."},
+{id:"f-isl-amethyst",name:"Islehopper (Amethyst)",cat:"Fish",co:"Hunter's Call",min:160,max:400,notes:"Raw 105g | Cooked 160g | Trophy Cooked 400g. Night only. Found at: Devil's Ridge, Smuggler's Bay, Mermaid's Hideaway, The Crooked Masts, Old Faithful Isle, Flintlock Peninsula, Snake Island.",find:"Fish at night in shallow water near the specific islands listed in Notes. No bait required."},
+{id:"f-isl-raven",name:"Islehopper (Raven)",cat:"Fish",co:"Hunter's Call",min:1575,max:3940,notes:"Raw 1,050g | Cooked 1,575g | Trophy Cooked 3,940g. Rare — can be caught at any large island.",find:"Near the shores of any large island. No bait required. Very rare — it can spawn at any large island but takes persistence."},
+{id:"f-ple-olive",name:"Plentifin (Olive)",cat:"Fish",co:"Hunter's Call",min:115,max:285,notes:"Raw 75g | Cooked 115g | Trophy Cooked 285g.",find:"Shores of Plenty region (northwest sea). Use Earthworm bait — dig from grassy areas. Fish near islands in this region."},
+{id:"f-ple-amber",name:"Plentifin (Amber)",cat:"Fish",co:"Hunter's Call",min:225,max:565,notes:"Raw 150g | Cooked 225g | Trophy Cooked 565g.",find:"Shores of Plenty region. Use Earthworm bait."},
+{id:"f-ple-cloudy",name:"Plentifin (Cloudy)",cat:"Fish",co:"Hunter's Call",min:340,max:850,notes:"Raw 225g | Cooked 340g | Trophy Cooked 850g.",find:"Shores of Plenty region. Use Earthworm bait."},
+{id:"f-ple-watery",name:"Plentifin (Watery)",cat:"Fish",co:"Hunter's Call",min:225,max:565,notes:"Raw 150g | Cooked 225g | Trophy Cooked 565g. Night only.",find:"Shores of Plenty region. Use Earthworm bait. Only bites at night."},
+{id:"f-ple-bonedust",name:"Plentifin (Bonedust)",cat:"Fish",co:"Hunter's Call",min:1500,max:3750,notes:"Raw 1,000g | Cooked 1,500g | Trophy Cooked 3,750g. Rare variant.",find:"Shores of Plenty region. Use Earthworm bait. Very rare — be patient."},
+{id:"f-wil-russet",name:"Wildsplash (Russet)",cat:"Fish",co:"Hunter's Call",min:115,max:285,notes:"Raw 75g | Cooked 115g | Trophy Cooked 285g.",find:"The Wilds region (northeast sea). Use Earthworm bait — dig from grassy areas."},
+{id:"f-wil-sandy",name:"Wildsplash (Sandy)",cat:"Fish",co:"Hunter's Call",min:225,max:565,notes:"Raw 150g | Cooked 225g | Trophy Cooked 565g.",find:"The Wilds region. Use Earthworm bait."},
+{id:"f-wil-ocean",name:"Wildsplash (Ocean)",cat:"Fish",co:"Hunter's Call",min:340,max:850,notes:"Raw 225g | Cooked 340g | Trophy Cooked 850g.",find:"The Wilds region. Use Earthworm bait."},
+{id:"f-wil-coral",name:"Wildsplash (Coral)",cat:"Fish",co:"Hunter's Call",min:225,max:565,notes:"Raw 150g | Cooked 225g | Trophy Cooked 565g. Night only.",find:"The Wilds region. Use Earthworm bait. Only bites at night."},
+{id:"f-wil-muddy",name:"Wildsplash (Muddy)",cat:"Fish",co:"Hunter's Call",min:1500,max:3750,notes:"Raw 1,000g | Cooked 1,500g | Trophy Cooked 3,750g. Rare variant.",find:"The Wilds region. Use Earthworm bait. Very rare."},
+{id:"f-anc-almond",name:"Ancientscale (Almond)",cat:"Fish",co:"Hunter's Call",min:115,max:285,notes:"Raw 75g | Cooked 115g | Trophy Cooked 285g.",find:"The Ancient Isles region (central sea). Use Leech bait — dig from shorelines."},
+{id:"f-anc-sapphire",name:"Ancientscale (Sapphire)",cat:"Fish",co:"Hunter's Call",min:225,max:565,notes:"Raw 150g | Cooked 225g | Trophy Cooked 565g.",find:"The Ancient Isles region. Use Leech bait."},
+{id:"f-anc-smoke",name:"Ancientscale (Smoke)",cat:"Fish",co:"Hunter's Call",min:340,max:850,notes:"Raw 225g | Cooked 340g | Trophy Cooked 850g.",find:"The Ancient Isles region. Use Leech bait."},
+{id:"f-anc-starshine",name:"Ancientscale (Starshine)",cat:"Fish",co:"Hunter's Call",min:225,max:565,notes:"Raw 150g | Cooked 225g | Trophy Cooked 565g. Night only.",find:"The Ancient Isles region. Use Leech bait. Only bites at night."},
+{id:"f-anc-bone",name:"Ancientscale (Bone)",cat:"Fish",co:"Hunter's Call",min:1500,max:3750,notes:"Raw 1,000g | Cooked 1,500g | Trophy Cooked 3,750g. Rare variant.",find:"The Ancient Isles region. Use Leech bait. Very rare."},
+{id:"f-dev-ashen",name:"Devilfish (Ashen)",cat:"Fish",co:"Hunter's Call",min:115,max:285,notes:"Raw 75g | Cooked 115g | Trophy Cooked 285g.",find:"Devil's Roar region ONLY. Use Grub bait — dig from sandy soil. The volcanic eruptions and geysers make fishing here dangerous."},
+{id:"f-dev-seashell",name:"Devilfish (Seashell)",cat:"Fish",co:"Hunter's Call",min:225,max:565,notes:"Raw 150g | Cooked 225g | Trophy Cooked 565g.",find:"Devil's Roar region ONLY. Use Grub bait."},
+{id:"f-dev-lava",name:"Devilfish (Lava)",cat:"Fish",co:"Hunter's Call",min:340,max:850,notes:"Raw 225g | Cooked 340g | Trophy Cooked 850g.",find:"Devil's Roar region ONLY. Use Grub bait."},
+{id:"f-dev-forsaken",name:"Devilfish (Forsaken)",cat:"Fish",co:"Hunter's Call",min:225,max:565,notes:"Raw 150g | Cooked 225g | Trophy Cooked 565g. Night only.",find:"Devil's Roar region ONLY. Use Grub bait. Only bites at night."},
+{id:"f-dev-firefly",name:"Devilfish (Firefly)",cat:"Fish",co:"Hunter's Call",min:1500,max:3750,notes:"Raw 1,000g | Cooked 1,500g | Trophy Cooked 3,750g. Rare variant.",find:"Devil's Roar region ONLY. Use Grub bait. Very rare."},
+{id:"f-bat-sand",name:"Battlegill (Sand)",cat:"Fish",co:"Hunter's Call",min:115,max:285,notes:"Raw 75g | Cooked 115g | Trophy Cooked 285g. Must fish during an active Skeleton Fort or Skeleton Fleet event.",find:"Fish in the water near an active Skeleton Fort world event or near Skeleton Ships. Use Grub bait."},
+{id:"f-bat-sunset",name:"Battlegill (Sunset)",cat:"Fish",co:"Hunter's Call",min:225,max:565,notes:"Raw 150g | Cooked 225g | Trophy Cooked 565g. Must fish near an active Skeleton event.",find:"Fish near an active Skeleton Fort or Skeleton Ship. Use Grub bait."},
+{id:"f-bat-sky",name:"Battlegill (Sky)",cat:"Fish",co:"Hunter's Call",min:340,max:850,notes:"Raw 225g | Cooked 340g | Trophy Cooked 850g. Must fish near an active Skeleton event.",find:"Fish near an active Skeleton Fort or Skeleton Ship. Use Grub bait."},
+{id:"f-bat-rum",name:"Battlegill (Rum)",cat:"Fish",co:"Hunter's Call",min:225,max:565,notes:"Raw 150g | Cooked 225g | Trophy Cooked 565g. Night only, near an active Skeleton event.",find:"Fish at night near an active Skeleton Fort or Skeleton Ship. Use Grub bait."},
+{id:"f-bat-brine",name:"Battlegill (Brine)",cat:"Fish",co:"Hunter's Call",min:1500,max:3750,notes:"Raw 1,000g | Cooked 1,500g | Trophy Cooked 3,750g. Rare. Must fish near an active Skeleton event.",find:"Fish near an active Skeleton Fort or Skeleton Ship. Use Grub bait. Very rare."},
+{id:"f-wre-rose",name:"Wrecker (Rose)",cat:"Fish",co:"Hunter's Call",min:115,max:285,notes:"Raw 75g | Cooked 115g | Trophy Cooked 285g. Must fish near a Shipwreck.",find:"Fish in the water directly surrounding a Shipwreck (look for circling seagulls). Use Earthworm bait."},
+{id:"f-wre-moon",name:"Wrecker (Moon)",cat:"Fish",co:"Hunter's Call",min:225,max:565,notes:"Raw 150g | Cooked 225g | Trophy Cooked 565g. Must fish near a Shipwreck.",find:"Fish near a Shipwreck. Use Earthworm bait."},
+{id:"f-wre-dawn",name:"Wrecker (Dawn)",cat:"Fish",co:"Hunter's Call",min:340,max:850,notes:"Raw 225g | Cooked 340g | Trophy Cooked 850g. Must fish near a Shipwreck.",find:"Fish near a Shipwreck. Use Earthworm bait."},
+{id:"f-wre-blackcloud",name:"Wrecker (Blackcloud)",cat:"Fish",co:"Hunter's Call",min:1500,max:3750,notes:"Raw 1,000g | Cooked 1,500g | Trophy Cooked 3,750g. Unique double condition: must be near a Shipwreck AND inside a Storm.",find:"Fish near a Shipwreck that is inside an active Storm. Sail into a storm, find a Shipwreck within it, and cast from there. Use Earthworm bait."},
+{id:"f-wre-snow",name:"Wrecker (Snow)",cat:"Fish",co:"Hunter's Call",min:1875,max:4690,notes:"Raw 1,250g | Cooked 1,875g | Trophy Cooked 4,690g. Most valuable Wrecker — even rarer than Blackcloud.",find:"Fish near a Shipwreck. Use Earthworm bait. Extremely rare — the most valuable standard Wrecker variant."},
+{id:"f-str-ancient",name:"Stormfish (Ancient)",cat:"Fish",co:"Hunter's Call",min:750,max:1875,notes:"Raw 500g | Cooked 750g | Trophy Cooked 1,875g. Ancient Isles region storms only.",find:"Fish inside an active Storm in The Ancient Isles region. Use Leech bait. Storms are indicated by the compass spinning and the ship bell ringing."},
+{id:"f-str-shores",name:"Stormfish (Shores)",cat:"Fish",co:"Hunter's Call",min:750,max:1875,notes:"Raw 500g | Cooked 750g | Trophy Cooked 1,875g. Shores of Plenty region storms only.",find:"Fish inside an active Storm in The Shores of Plenty region. Use Leech bait."},
+{id:"f-str-wild",name:"Stormfish (Wild)",cat:"Fish",co:"Hunter's Call",min:750,max:1875,notes:"Raw 500g | Cooked 750g | Trophy Cooked 1,875g. The Wilds region storms only.",find:"Fish inside an active Storm in The Wilds region. Use Leech bait."},
+{id:"f-str-shadow",name:"Stormfish (Shadow)",cat:"Fish",co:"Hunter's Call",min:750,max:1875,notes:"Raw 500g | Cooked 750g | Trophy Cooked 1,875g. Night storms, any region.",find:"Fish inside any active Storm at night in any region. Use Leech bait."},
+{id:"f-str-twilight",name:"Stormfish (Twilight)",cat:"Fish",co:"Hunter's Call",min:2250,max:5625,notes:"Raw 1,500g | Cooked 2,250g | Trophy Cooked 5,625g. The most valuable fish in the game. Any storm, any region, any time.",find:"Fish inside any active Storm, any region, any time of day. Use Leech bait. Extremely rare — the rarest and most valuable fish."},
+// ── MEAT ──
+{id:"m1",name:"Chicken Meat",cat:"Meat",co:"Hunter's Call",min:7,max:10,notes:"Raw 7g | Cooked 10g | Burned 1g.",find:"Kill chickens found on most larger islands. Approach slowly — chickens bolt if startled. Sell raw or cook on your ship's stove for higher gold."},
+{id:"m2",name:"Pork",cat:"Meat",co:"Hunter's Call",min:7,max:10,notes:"Raw 7g | Cooked 10g | Burned 1g.",find:"Kill pigs found on most larger islands. Their loud squealing may alert skeleton enemies. Sell raw or cook on ship's stove before selling."},
+{id:"m3",name:"Snake Meat",cat:"Meat",co:"Hunter's Call",min:7,max:10,notes:"Raw 7g | Cooked 10g | Burned 1g.",find:"Kill snakes found on most larger islands. Snakes attack if you get close — play your instrument to charm them first, or simply kill them."},
+{id:"m4",name:"Shark Meat",cat:"Meat",co:"Hunter's Call",min:15,max:25,notes:"Raw 15g | Cooked 25g | Burned 1g. Several pieces drop per shark.",find:"Kill sharks that attack you when swimming near ships in open water. Multiple pieces drop per kill. Sell raw or cook on your ship's stove."},
+{id:"m5",name:"Megalodon Meat",cat:"Meat",co:"Hunter's Call",min:100,max:150,notes:"Raw 100g | Cooked 150g | Burned 1g. Multiple pieces drop per kill — 4-5 pieces from a full kill.",find:"Kill any Megalodon boss that spawns in open water and attacks ships. Multiple pieces drop. Cook on the ship's stove for maximum value."},
+{id:"m6",name:"Kraken Meat",cat:"Meat",co:"Hunter's Call",min:100,max:150,notes:"Raw 100g | Cooked 150g | Burned 1g. Harvested from each defeated tentacle.",find:"Harvest from Kraken tentacles during a Kraken world event. The Kraken spawns unpredictably in open water and grabs your ship. Defeat tentacles to collect meat."},
+// ── MERMAID GEMS ──
+{id:"g1",name:"Sapphire Mermaid Gem",cat:"Gems",co:"Any",min:800,max:1200,notes:"Sell to any company except Athena's Fortune.",find:"Destroy Sapphire Cursed Mermaid Statues found on the shores of islands and in shallow surrounding waters. Shoot or strike them — they explode and release the gem."},
+{id:"g2",name:"Emerald Mermaid Gem",cat:"Gems",co:"Any",min:1200,max:1800,notes:"Sell to any company except Athena's Fortune.",find:"Destroy Emerald Cursed Mermaid Statues found on island shores and in shallow water. Harder to destroy than Sapphire statues."},
+{id:"g3",name:"Ruby Mermaid Gem",cat:"Gems",co:"Any",min:2000,max:3200,notes:"Rarest Mermaid Gem. Sell to any company except Athena's Fortune.",find:"Destroy Ruby Cursed Mermaid Statues — the rarest and toughest to destroy. Found on island shores. Also occasionally found inside Collector's Chests."},
+// ── SIREN GEMS ──
+{id:"sg1",name:"Sapphire Siren Gem",cat:"Siren Gems",co:"Any",min:1000,max:0,notes:"Sell to any company except Athena's Fortune. Also used as keys to unlock Siren Treasury vault doors.",find:"Dropped by Sirens and Eel-ectric Ocean Crawlers underwater. Also found inside Siren Shrines and Siren Treasuries."},
+{id:"sg2",name:"Emerald Siren Gem",cat:"Siren Gems",co:"Any",min:1500,max:0,notes:"Sell to any company except Athena's Fortune.",find:"Dropped by Siren Leaders and Hermit Ocean Crawlers. Also found inside Siren Shrines and Siren Treasuries."},
+{id:"sg3",name:"Ruby Siren Gem",cat:"Siren Gems",co:"Any",min:2000,max:0,notes:"Rarest Siren Gem. Sell to any company except Athena's Fortune.",find:"Dropped by Crab Ocean Crawlers. Also found in the deepest parts of Siren Treasuries."},
+// ── ARTEFACTS ──
+{id:"art-b1",name:"Ancient Goblet",cat:"Artefacts",co:"Gold Hoarders",min:60,max:130,notes:"Bronze tier artefact.",find:"Found inside Collector's Chests from Riddle Map voyages, from X Marks the Spot maps, in Shipwrecks, and occasionally as random world spawns on islands."},
+{id:"art-b2",name:"Bronze Secret-Keeper",cat:"Artefacts",co:"Gold Hoarders",min:60,max:130,notes:"Bronze tier artefact.",find:"Found inside Collector's Chests from Riddle Map voyages, in Shipwrecks, and as random spawns on islands."},
+{id:"art-b3",name:"Mysterious Vessel",cat:"Artefacts",co:"Gold Hoarders",min:60,max:130,notes:"Bronze tier artefact.",find:"Found inside Collector's Chests from Riddle Map voyages, in Shipwrecks, and as random world spawns on islands."},
+{id:"art-s1",name:"Decorative Coffer",cat:"Artefacts",co:"Gold Hoarders",min:140,max:260,notes:"Silver tier artefact.",find:"Found inside Collector's Chests from Riddle Map voyages and higher-level Gold Hoarder voyages. Also in Shipwrecks."},
+{id:"art-s2",name:"Elaborate Flagon",cat:"Artefacts",co:"Gold Hoarders",min:140,max:260,notes:"Silver tier artefact.",find:"Found inside Collector's Chests from Riddle Map voyages. Also in Shipwrecks."},
+{id:"art-s3",name:"Silvered Cup",cat:"Artefacts",co:"Gold Hoarders",min:140,max:260,notes:"Silver tier artefact.",find:"Found inside Collector's Chests from Riddle Map voyages. Also in Shipwrecks."},
+{id:"art-g1",name:"Gilded Chalice",cat:"Artefacts",co:"Gold Hoarders",min:280,max:520,notes:"Gold tier artefact.",find:"Found inside Collector's Chests from Riddle Map voyages and Gold Hoarders Wayfinder Voyages. Also in Shipwrecks."},
+{id:"art-g2",name:"Golden Reliquary",cat:"Artefacts",co:"Gold Hoarders",min:280,max:520,notes:"Gold tier artefact.",find:"Found inside Collector's Chests from Riddle Map voyages. Also in Shipwrecks and occasionally as a random island spawn."},
+{id:"art-g3",name:"Ornate Carafe",cat:"Artefacts",co:"Gold Hoarders",min:280,max:520,notes:"Gold tier artefact.",find:"Found inside Collector's Chests from Riddle Map voyages. Also in Shipwrecks."},
+{id:"art-j1",name:"Adorned Receptacle",cat:"Artefacts",co:"Gold Hoarders",min:560,max:1100,notes:"Jeweled tier artefact — highest regular artefact value.",find:"Found inside Collector's Chests from high-level Riddle Map voyages and Gold Hoarders Wayfinder Voyages."},
+{id:"art-j2",name:"Opulent Curio",cat:"Artefacts",co:"Gold Hoarders",min:560,max:1100,notes:"Jeweled tier artefact.",find:"Found inside Collector's Chests from high-level Riddle Map voyages and Wayfinder Voyages."},
+{id:"art-j3",name:"Peculiar Relic",cat:"Artefacts",co:"Gold Hoarders",min:560,max:1100,notes:"Jeweled tier artefact.",find:"Found inside Collector's Chests from high-level Riddle Map voyages and Wayfinder Voyages. Also occasionally found in Shipwrecks."},
+{id:"art-bos1",name:"Sapphire Breath of the Sea",cat:"Artefacts",co:"Gold Hoarders",min:4000,max:0,find:"Found exclusively inside Siren Treasuries. Complete the Siren Gem puzzle to open the vault. The Sapphire variant is the most common of the three."},
+{id:"art-bos2",name:"Emerald Breath of the Sea",cat:"Artefacts",co:"Gold Hoarders",min:6000,max:0,find:"Found exclusively inside Siren Treasuries. The Emerald variant is rarer than the Sapphire."},
+{id:"art-bos3",name:"Ruby Breath of the Sea",cat:"Artefacts",co:"Gold Hoarders",min:8000,max:0,notes:"Rarest and most valuable of the three Breath of the Sea variants.",find:"Found exclusively inside Siren Treasuries. The rarest variant — only occasionally spawns in the deepest parts of the Treasury vault."},
+{id:"at3",name:"Box of Wondrous Secrets",cat:"Artefacts",co:"Athena's Fortune",min:25000,max:0,find:"Extremely rare reward from Athena's Fortune Legendary Voyages. Occasionally found in the Fort of the Damned vault. Requires Pirate Legend status."},
+{id:"at4",name:"Skull of Siren Song",cat:"Artefacts",co:"Athena's Fortune",min:10000,max:15000,find:"Obtained from Athena's Fortune Legendary Voyages. Requires Pirate Legend status."},
+{id:"at5",name:"Chalice of Ancient Tributes",cat:"Artefacts",co:"Athena's Fortune",min:6000,max:9000,find:"Obtained from Athena's Fortune Legendary Voyages. Requires Pirate Legend status."},
+{id:"at6",name:"Keg of Ancient Black Powder",cat:"Artefacts",co:"Athena's Fortune",min:3000,max:5000,notes:"Explosive — glows green. Handle with extreme care, it explodes on impact.",find:"Obtained from Athena's Fortune Legendary Voyages. Requires Pirate Legend status."},
+{id:"at7",name:"Gilded Relic of Ancient Fortune",cat:"Artefacts",co:"Athena's Fortune",min:1400,max:1550,find:"Found inside Collector's Chests from Athena's Fortune Legendary Voyages. Also from Fort of Fortune vaults."},
+{id:"at8",name:"Villainous Skull of Ancient Fortune",cat:"Artefacts",co:"Athena's Fortune",min:1400,max:1550,find:"Found inside Collector's Chests from Athena's Fortune Legendary Voyages."},
+{id:"at9",name:"Orb of Secrets",cat:"Artefacts",co:"Any",min:20000,max:0,notes:"Cannot be sold to Athena's Fortune.",find:"Found in the Temple Crypt beneath Skeleton Camps. Solve the Constellation Puzzle on the Spinning Stones above the crypt door, then defeat the Obsidian Skeleton waves to access the crypt."},
+// ── ASHEN ARTEFACTS ──
+{id:"ashart-1",name:"Roaring Goblet",cat:"Ashen Artefacts",co:"Gold Hoarders",min:140,max:260,notes:"Devil's Roar artefact — glows red/orange.",find:"Found inside Collector's Chests from Ashen Gold Hoarder voyages in the Devil's Roar. Also inside unlocked Ashen Chests and dropped by Ashen Lords."},
+{id:"ashart-2",name:"Brimstone Casket",cat:"Ashen Artefacts",co:"Gold Hoarders",min:280,max:520,notes:"Devil's Roar artefact — glows red/orange.",find:"Found inside Collector's Chests from Ashen voyages in the Devil's Roar. Also inside unlocked Ashen Chests and dropped by Ashen Lords."},
+{id:"ashart-3",name:"Devil's Remnant",cat:"Ashen Artefacts",co:"Gold Hoarders",min:560,max:1100,notes:"Devil's Roar artefact — glows red/orange.",find:"Found inside Collector's Chests from higher-level Ashen voyages in the Devil's Roar. Also from Ashen Lords and inside Ashen Chests."},
+{id:"ashart-4",name:"Magma's Grail",cat:"Ashen Artefacts",co:"Gold Hoarders",min:1100,max:2100,notes:"Rarest and most valuable Devil's Roar artefact.",find:"Found inside Collector's Chests from high-level Ashen Gold Hoarder voyages. Also occasionally dropped by Ashen Lords."},
+// ── CORAL ARTEFACTS ──
+{id:"corart-1",name:"Mysterious Coral Vessel",cat:"Coral Artefacts",co:"Gold Hoarders",min:105,max:228,notes:"Coral-encrusted artefact from Siren locations.",find:"Found inside Siren Shrines and Siren Treasuries. Dive underwater and search the coral structures."},
+{id:"corart-2",name:"Silvered Coral Cup",cat:"Coral Artefacts",co:"Gold Hoarders",min:245,max:455,notes:"Coral artefact from Siren locations.",find:"Found inside Siren Shrines and the vaults of Siren Treasuries."},
+{id:"corart-3",name:"Golden Coral Reliquary",cat:"Coral Artefacts",co:"Gold Hoarders",min:490,max:910,notes:"Coral artefact from Siren locations.",find:"Found inside Siren Shrines and the locked vaults of Siren Treasuries. Use Siren Gems to unlock the vault door."},
+{id:"corart-4",name:"Peculiar Coral Relic",cat:"Coral Artefacts",co:"Gold Hoarders",min:980,max:1925,notes:"Rarest coral artefact — highest value of the four types.",find:"Found deep inside locked Siren Treasury vaults. The rarest coral artefact — only one or two may spawn per Treasury run."},
+// ── VAULT KEYS ──
+{id:"vk1",name:"Stone Treasure Vault Key",cat:"Vault",co:"Gold Hoarders",min:3750,max:5000,notes:"7 totem types: Boar (Devil's Ridge), Crab (N-13), Moon (Crescent Isle), Scarab (Crook's Hollow), Snake (Mermaid's Hideaway), Shark (Kraken's Fall), Eagle (Fetcher's Rest / Ashen Reach).",find:"Obtained from Gold Hoarders Pirate-tier Wayfinder Voyages. The voyage uses a Golden Wayfinder Compass to find Torn Map Parchments, which reveal an X on a large island. Dig it up for a Collector's Chest containing the key."},
+{id:"vk2",name:"Gold Treasure Vault Key",cat:"Vault",co:"Gold Hoarders",min:9000,max:12000,notes:"Higher-tier key. Same 7 totem types as the Stone Key but opens a more valuable vault.",find:"Obtained from Gold Hoarders Captain-tier Wayfinder Voyages. Follow the Wayfinder Compass to Torn Map Parchments and dig up the Collector's Chest."},
+// ── BOUNTY ──
+{id:"r1",name:"Reaper's Chest",cat:"Bounty",co:"Reaper's Bones",min:5000,max:12000,notes:"ONLY sells to the Masked Stranger at The Reaper's Hideout (center of the map).",find:"Spawns randomly on islands — glows red and visible from a distance. Also found in Skeleton Fort Vaults. Its location is visible to ALL crews on the map."},
+{id:"r2",name:"Reaper's Bounty",cat:"Bounty",co:"Reaper's Bones",min:10000,max:20000,notes:"ONLY sells to the Masked Stranger at The Reaper's Hideout.",find:"Rare random world spawn on islands — glows gold and visible to ALL crews on the map. Much rarer than the Reaper's Chest. Sell fast."},
+{id:"r3",name:"Reaper's Chest of Legend",cat:"Bounty",co:"Reaper's Bones",min:20000,max:35000,notes:"Rare high-value Reaper's Bones exclusive.",find:"Extremely rare world spawn on islands. Also occasionally found in Fort of the Damned vaults. Visible to all crews on the map."},
+// ── MANIFESTS ──
+{id:"mf1",name:"Prosperous Manifest",cat:"Manifests",co:"Merchant Alliance",min:1600,max:2800,find:"Found inside sunken Merchant Alliance vessels — follow the Lost Shipment compass from a Merchant Alliance Lost Shipment voyage to locate the wreck. Dive down to the cargo hold to retrieve the manifest."},
+{id:"mf2",name:"Esteemed Manifest",cat:"Manifests",co:"Merchant Alliance",min:2400,max:3200,find:"Found inside sunken Merchant Alliance vessels on Lost Shipment voyages. Rarer than the Prosperous Manifest."},
+{id:"mf3",name:"Eminent Manifest",cat:"Manifests",co:"Merchant Alliance",min:3200,max:4000,find:"Found inside sunken Merchant Alliance vessels on Lost Shipment voyages. One of the rarer manifest grades."},
+{id:"mf4",name:"Grand Manifest",cat:"Manifests",co:"Merchant Alliance",min:4000,max:5600,notes:"Highest-value manifest. Rare find even from high-tier Lost Shipment voyages.",find:"Found inside sunken Merchant Alliance vessels on Lost Shipment voyages. The rarest and most valuable manifest grade."},
+// ── EMISSARY FLAGS ──
+{id:"ef1",name:"Emissary Flag (Grade I)",cat:"Emissary Flags",co:"Reaper's Bones",min:1600,max:2400,notes:"Dropped when you sink a ship flying a Grade I emissary flag. Sell ONLY to Reaper's Bones at The Reaper's Hideout.",find:"Dropped by player ships sailing as a Grade I emissary for any trading company. Attack and sink the emissary ship to claim the flag."},
+{id:"ef2",name:"Emissary Flag (Grade II)",cat:"Emissary Flags",co:"Reaper's Bones",min:3500,max:4900,notes:"Dropped from Grade II emissary ships. Sell ONLY to Reaper's Bones.",find:"Dropped by player ships sailing as a Grade II emissary. Sink the emissary vessel to claim the flag, then sell to The Reaper's Hideout."},
+{id:"ef3",name:"Emissary Flag (Grade III)",cat:"Emissary Flags",co:"Reaper's Bones",min:5500,max:7600,notes:"Dropped from Grade III emissary ships. Sell ONLY to Reaper's Bones.",find:"Dropped by player ships sailing as a Grade III emissary. A mid-tier flag worth targeting if you can win the fight."},
+{id:"ef4",name:"Emissary Flag (Grade IV)",cat:"Emissary Flags",co:"Reaper's Bones",min:7600,max:10500,notes:"Dropped from Grade IV emissary ships. Sell ONLY to Reaper's Bones.",find:"Dropped by player ships sailing as a Grade IV emissary. A high-value target — Grade IV emissaries have been collecting treasure for a while."},
+{id:"ef5",name:"Emissary Flag (Grade V)",cat:"Emissary Flags",co:"Reaper's Bones",min:9500,max:25000,notes:"Dropped from Grade V emissary ships. Value varies by company — Athena's Fortune Grade V flags fetch the highest price. Sell ONLY to Reaper's Bones.",find:"Dropped by player ships that have reached Grade V emissary status (maximum grade). These ships carry a visible glowing flag visible across the sea."},
+// ── OTHER ──
+{id:"rs1",name:"Ritual Skull",cat:"Other",co:"Bilge Rats",min:0,max:0,dbl:true,notes:"10 Doubloons to Bilge Rats/Larinna. Primary use: one of 6 ritual skulls needed to activate the Fort of the Damned world event.",find:"Found randomly on island beaches, inside Shipwrecks, and occasionally dropped by Skeleton Captains. Six coloured variants exist (one per Flame of Fate)."},
+{id:"at10",name:"Tome of Curses",cat:"Other",co:"Bilge Rats",min:0,max:0,dbl:true,notes:"10 Doubloons to Bilge Rats/Larinna. Found inside unlocked Ashen Chests.",find:"Contained inside Ashen Chests — use an Ashen Key to unlock one. Three tomes of various types are found in each Ashen Chest. Sell to Larinna at any Outpost tavern."},
+{id:"at11",name:"Tome of Power",cat:"Other",co:"Bilge Rats",min:0,max:0,dbl:true,notes:"10 Doubloons to Bilge Rats/Larinna. Found inside unlocked Ashen Chests.",find:"Contained inside Ashen Chests — use an Ashen Key to unlock one. Each Ashen Chest contains 3 Ashen Tomes of random types."},
+{id:"at12",name:"Tome of Fire",cat:"Other",co:"Bilge Rats",min:0,max:0,dbl:true,notes:"10 Doubloons to Bilge Rats/Larinna. Found inside unlocked Ashen Chests.",find:"Contained inside Ashen Chests — use an Ashen Key to unlock one. Each Ashen Chest contains 3 Ashen Tomes of random types."},
+{id:"at13",name:"Tome of Resurrection",cat:"Other",co:"Bilge Rats",min:0,max:0,dbl:true,notes:"10 Doubloons to Bilge Rats/Larinna. Found inside unlocked Ashen Chests.",find:"Contained inside Ashen Chests — use an Ashen Key to unlock one. Each Ashen Chest contains 3 Ashen Tomes of random types."},
+{id:"br1",name:"Ashen Key",cat:"Other",co:"Bilge Rats",min:0,max:0,dbl:true,notes:"5 Doubloons (Bilge Rats) or 10 Doubloons + Rep (Reaper's Bones). Used to unlock Ashen Chests.",find:"Dropped by Ashen Skeleton Key Masters in the Devil's Roar — captains that glow and carry a key on their belt. Also found in Ashen voyages and occasionally in Devil's Roar Shipwrecks."},
+{id:"br2",name:"Ashen Chest (Locked)",cat:"Other",co:"Bilge Rats",min:0,max:0,dbl:true,notes:"5 Doubloons to Bilge Rats or Reaper's Bones. Unlock with an Ashen Key to get 3 Ashen Tomes inside worth additional Doubloons.",find:"Found buried on Devil's Roar islands via X Marks the Spot and Riddle Maps, or dropped during Ashen voyages. Always contains 3 Ashen Tomes when unlocked with an Ashen Key."}
+];
+
+const CO_CLS={"Gold Hoarders":"co-gh","Order of Souls":"co-oos","Merchant Alliance":"co-ma","Reaper's Bones":"co-rb","Athena's Fortune":"co-af","Hunter's Call":"co-hc","Bilge Rats":"co-br","Any":"co-any"};
+const GRADES=[[1.0,"Grade I"],[1.33,"Grade II"],[1.66,"Grade III"],[2.0,"Grade IV"],[2.5,"Grade V"]];
+
+function fmt(n){return Math.round(n).toLocaleString()}
+function vr(item,m){
+  if(item.dbl)return(item.notes||"").match(/\d[\d,]* Doubloon/)?.[0]||"Doubloons";
+  if(item.max)return fmt(item.min*m)+" \u2013 "+fmt(item.max*m)+" g";
+  return fmt(item.min*m)+" g";
+}
+function sellText(co){
+  if(co==="Any")return"Sells to most Trading Companies — Gold Hoarders, Order of Souls, Merchant Alliance, Hunter's Call, or Reaper's Bones.";
+  if(co==="Bilge Rats")return"Sell to the Bilge Rats representative (Larinna) at any Outpost tavern.";
+  if(co==="Athena's Fortune")return"Sell to Athena's Fortune — find the Mysterious Stranger in any Tavern.";
+  if(co==="Reaper's Bones")return"Sell ONLY to the Masked Stranger at The Reaper's Hideout (center of the map).";
+  return"Sell to "+co+" representatives at any Outpost. Reaper's Bones at The Reaper's Hideout also accepts this.";
+}
+
+function render(){
+  const q=document.getElementById("search").value.toLowerCase();
+  const catF=document.getElementById("cat").value;
+  const coF=document.getElementById("co").value;
+  const srt=document.getElementById("sort").value;
+
+  let items=D.filter(it=>{
+    if(q&&!it.name.toLowerCase().includes(q)&&!it.cat.toLowerCase().includes(q)&&!it.co.toLowerCase().includes(q)&&!(it.notes||"").toLowerCase().includes(q))return false;
+    if(catF&&it.cat!==catF)return false;
+    if(coF&&it.co!==coF&&it.co!=="Any")return false;
+    return true;
+  });
+
+  items=[...items].sort((a,b)=>{
+    if(srt==="name")return a.name.localeCompare(b.name);
+    const mA=a.dbl?-1:(a.max?(a.min+a.max)/2:a.min);
+    const mB=b.dbl?-1:(b.max?(b.min+b.max)/2:b.min);
+    return mB-mA;
+  });
+
+  document.getElementById("count").textContent=items.length+" items";
+  const list=document.getElementById("list");
+
+  if(!items.length){list.innerHTML='<div class="empty">No treasure matches your search, Captain.</div>';return;}
+
+  list.innerHTML=items.map(it=>{
+    const bv=it.dbl?((it.notes||"").match(/\d[\d,]* Doubloon/)?.[0]||"Doubloons"):it.max?fmt(it.min)+" \u2013 "+fmt(it.max)+" g":fmt(it.min)+" g";
+    const gv=it.dbl?null:it.max?fmt(it.min*2.5)+" \u2013 "+fmt(it.max*2.5)+" g":fmt(it.min*2.5)+" g";
+    const cc=CO_CLS[it.co]||"co-any";
+    const gradeHtml=it.dbl
+      ?`<h4>Reward</h4><p style="color:#fb923c">${(it.notes||"").match(/\d[\d,]* Doubloon[s]?/)?.[0]||"Doubloons"} \u2014 emissary grades do not apply to doubloon items</p>`
+      :`<h4>Emissary Grade Value</h4>${GRADES.map(([m,lbl],i)=>`<div class="gr${i===4?" gv":""}"><span class="${i===4?"":"gl"}">${lbl} <span style="opacity:.5;font-size:11px">(${m}\xd7)</span></span><span>${vr(it,m)}</span></div>`).join("")}`;
+    return`<div class="row" id="r-${it.id}">
+<button class="rbtn" onclick="tog('${it.id}')">
+  <span class="ch"></span>
+  <span class="nw"><span class="iname">${it.name}</span><span class="icat">${it.cat}</span></span>
+  <span class="bdg"><span class="${cc}">${it.co}</span></span>
+  <span class="vw"><span class="vb">${bv}</span>${gv?`<span class="vgv">G V: ${gv}</span>`:""}</span>
+</button>
+<div class="exp">
+  <div class="ei">
+    <div class="es">${gradeHtml}</div>
+    <div class="es">
+      <h4>Where to Find</h4><p>${it.find}</p>
+      <div class="sep"></div>
+      <h4>Where to Sell</h4><p>${sellText(it.co)}</p>
+      ${it.notes?`<div class="sep"></div><h4>Notes</h4><p style="color:var(--muted)">${it.notes}</p>`:""}
+    </div>
+  </div>
+</div>
+</div>`;
+  }).join("");
+}
+
+function tog(id){document.getElementById("r-"+id).classList.toggle("open")}
+
+document.getElementById("search").addEventListener("input",render);
+document.getElementById("cat").addEventListener("change",render);
+document.getElementById("co").addEventListener("change",render);
+document.getElementById("sort").addEventListener("change",render);
+render();
+</script>
+</body>
+</html>
