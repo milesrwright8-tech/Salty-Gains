@@ -140,6 +140,18 @@ footer{margin-top:10px;text-align:center;font-size:11px;color:var(--muted);paddi
 .planner-name{flex:1;font-size:13px}
 .planner-cat{font-size:11px;color:var(--muted)}
 .planner-val{font-size:13px;color:var(--primary);font-weight:600;flex-shrink:0}
+/* ── Searchable dropdown ── */
+.sd-wrap{position:relative;flex:1}
+.sd-input{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:6px 28px 6px 8px;border-radius:6px;font-size:13px}
+.sd-input:focus{outline:2px solid var(--primary);outline-offset:-1px}
+.sd-arrow{position:absolute;right:8px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--muted);font-size:10px}
+.sd-list{position:absolute;top:calc(100% + 3px);left:0;right:0;background:var(--card);border:1px solid var(--border);border-radius:8px;z-index:100;max-height:260px;overflow-y:auto;display:none;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.sd-list.open{display:block}
+.sd-group{padding:6px 10px 2px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-top:1px solid var(--border)}
+.sd-group:first-child{border-top:none}
+.sd-opt{padding:7px 14px;font-size:13px;cursor:pointer;transition:background .1s}
+.sd-opt:hover,.sd-opt.active{background:rgba(245,158,11,.15);color:var(--primary)}
+.sd-empty{padding:10px 14px;font-size:13px;color:var(--muted);font-style:italic}
 </style>
 </head>
 <body>
@@ -208,7 +220,11 @@ footer{margin-top:10px;text-align:center;font-size:11px;color:var(--muted);paddi
         <h3>🧮 Gold Calculator</h3>
         <div class="field-row">
           <label>Item</label>
-          <select id="calc-item"></select>
+          <div class="sd-wrap" id="sd-wrap">
+            <input class="sd-input" id="sd-input" type="text" placeholder="Search items..." autocomplete="off">
+            <span class="sd-arrow">▼</span>
+            <div class="sd-list" id="sd-list"></div>
+          </div>
         </div>
         <div class="field-row">
           <label>Quantity</label>
@@ -614,21 +630,48 @@ document.getElementById("sort").addEventListener("change",render);
 
 // ══════════════════════════ CALCULATOR ══════════════════════════
 let haul=[];
-// Populate item dropdown grouped by category
-(function(){
-  const sel=document.getElementById("calc-item");
-  const cats=[...new Set(D.filter(it=>!it.dbl).map(it=>it.cat))];
-  cats.forEach(cat=>{
-    const grp=document.createElement("optgroup");
-    grp.label=cat;
-    D.filter(it=>it.cat===cat&&!it.dbl).forEach(it=>{
-      const opt=document.createElement("option");
-      opt.value=it.id;
-      opt.textContent=it.name;
-      grp.appendChild(opt);
+let sdSelected={id:null,name:""};
+const sdItems=D.filter(it=>!it.dbl);
+const sdCats=[...new Set(sdItems.map(it=>it.cat))];
+
+function sdRender(q){
+  const list=document.getElementById("sd-list");
+  const term=(q||"").toLowerCase();
+  let html="",any=false;
+  sdCats.forEach(cat=>{
+    const matches=sdItems.filter(it=>it.cat===cat&&(!term||it.name.toLowerCase().includes(term)));
+    if(!matches.length)return;
+    html+=`<div class="sd-group">${cat}</div>`;
+    matches.forEach(it=>{
+      html+=`<div class="sd-opt${sdSelected.id===it.id?" active":""}" data-id="${it.id}" data-name="${it.name}">${it.name}</div>`;
     });
-    sel.appendChild(grp);
+    any=true;
   });
+  list.innerHTML=any?html:'<div class="sd-empty">No items found</div>';
+  list.querySelectorAll(".sd-opt").forEach(el=>{
+    el.addEventListener("mousedown",e=>{
+      e.preventDefault();
+      sdSelect(el.dataset.id,el.dataset.name);
+    });
+  });
+}
+
+function sdSelect(id,name){
+  sdSelected={id,name};
+  document.getElementById("sd-input").value=name;
+  document.getElementById("sd-list").classList.remove("open");
+}
+
+(function(){
+  const input=document.getElementById("sd-input");
+  const list=document.getElementById("sd-list");
+  input.addEventListener("focus",()=>{sdRender(input.value);list.classList.add("open")});
+  input.addEventListener("input",()=>{sdSelected={id:null,name:""};sdRender(input.value);list.classList.add("open")});
+  input.addEventListener("blur",()=>{setTimeout(()=>list.classList.remove("open"),150)});
+  sdRender("");
+  // Pre-select first item
+  const first=sdItems[0];
+  if(first)sdSelect(first.id,first.name);
 })();
 
 // Grade multiplier bars (static visual)
@@ -643,7 +686,7 @@ let haul=[];
 })();
 
 function calcAdd(){
-  const id=document.getElementById("calc-item").value;
+  const id=sdSelected.id;
   const qty=Math.max(1,parseInt(document.getElementById("calc-qty").value)||1);
   const it=D.find(x=>x.id===id);
   if(!it)return;
