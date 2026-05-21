@@ -665,7 +665,7 @@ function sdSelect(id,name){
 (function(){
   const input=document.getElementById("sd-input");
   const list=document.getElementById("sd-list");
-  input.addEventListener("focus",()=>{sdRender(input.value);list.classList.add("open")});
+  input.addEventListener("focus",()=>{input.value="";sdSelected={id:null,name:""};sdRender("");list.classList.add("open")});
   input.addEventListener("input",()=>{sdSelected={id:null,name:""};sdRender(input.value);list.classList.add("open")});
   input.addEventListener("blur",()=>{setTimeout(()=>list.classList.remove("open"),150)});
   sdRender("");
