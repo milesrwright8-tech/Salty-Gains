@@ -716,14 +716,21 @@ function renderHaul(){
       return`<tr><td>${it.name}</td><td>${h.qty}</td><td>${fmt(avg*h.qty)} g</td><td><button class="rm-btn" onclick="calcRemove('${h.id}')">×</button></td></tr>`;
     }).join("")}</tbody>
   </table>
-  <div style="margin-top:14px">
-    <h4 style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px">Total by Emissary Grade</h4>
-    ${GRADES.map(([m,lbl],i)=>`
-      <div class="grade-bar-row">
-        <span class="grade-bar-lbl">${lbl}</span>
+  <div style="margin-top:16px">
+    <h4 style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px">Total by Emissary Grade</h4>
+    ${GRADES.slice(0,4).map(([m,lbl],i)=>`
+      <div class="grade-bar-row" style="margin-bottom:5px">
+        <span class="grade-bar-lbl" style="font-size:11px">${lbl}</span>
         <div class="grade-bar-track"><div class="grade-bar-fill" style="width:${(m/2.5)*100}%"></div></div>
-        <span class="grade-bar-val${i===4?" haul-total":""}">${fmt(totals[i])} g</span>
+        <span class="grade-bar-val" style="font-size:12px;min-width:90px">${fmt(totals[i])} g</span>
       </div>`).join("")}
+    <div style="margin-top:10px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.35);border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);font-weight:700;margin-bottom:2px">Grade V (2.5×)</div>
+        <div style="font-size:11px;color:var(--muted)">Maximum emissary value</div>
+      </div>
+      <div style="font-size:28px;font-weight:800;color:var(--primary);letter-spacing:-.5px">${fmt(totals[4])} g</div>
+    </div>
   </div>`;
 }
 
