@@ -62,8 +62,14 @@ main{max-width:960px;margin:16px auto;padding:0 8px}
 .ei{margin-left:28px;display:grid;grid-template-columns:1fr;gap:14px}
 @media(min-width:640px){.ei{grid-template-columns:1fr 1fr}}
 .es h4{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:7px}
-.gr{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
-.gv{color:var(--primary);font-weight:700}.gl{color:var(--muted)}
+.gr{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;padding:2px 0}
+.gb{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border-radius:7px;margin-bottom:4px;background:rgba(148,163,184,.06);border:1px solid var(--border)}
+.gb .gb-lbl{font-size:12px;font-weight:600;color:var(--text)}
+.gb .gb-val{font-size:13px;font-weight:700;color:var(--text)}
+.gv{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:7px;margin-top:6px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3)}
+.gv .gv-lbl{font-size:12px;font-weight:700;color:var(--primary)}
+.gv .gv-val{font-size:15px;font-weight:800;color:var(--primary)}
+.gl{color:var(--muted)}
 .es p{font-size:13px;line-height:1.5}.sep{margin:8px 0}
 .empty{padding:48px 16px;text-align:center;color:var(--muted);font-style:italic}
 footer{margin-top:10px;text-align:center;font-size:11px;color:var(--muted);padding-bottom:20px}
@@ -593,7 +599,10 @@ function render(){
     const isTop=top10.has(it.id);
     const gradeHtml=it.dbl
       ?`<h4>Reward</h4><p style="color:#fb923c">${(it.notes||"").match(/\d[\d,]* Doubloon[s]?/)?.[0]||"Doubloons"} \u2014 emissary grades do not apply</p>`
-      :`<h4>Emissary Grade Value</h4>${GRADES.map(([m,lbl],i)=>`<div class="gr${i===4?" gv":""}"><span class="${i===4?"":"gl"}">${lbl} <span style="opacity:.5;font-size:11px">(${m}\xd7)</span></span><span>${vr(it,m)}</span></div>`).join("")}`;
+      :`<h4>Emissary Grade Value</h4>
+<div class="gb"><span class="gb-lbl">Base Value <span style="opacity:.5;font-size:11px">(1×)</span></span><span class="gb-val">${vr(it,1)}</span></div>
+${GRADES.slice(1,4).map(([m,lbl])=>`<div class="gr"><span class="gl">${lbl} <span style="opacity:.5;font-size:11px">(${m}\xd7)</span></span><span>${vr(it,m)}</span></div>`).join("")}
+<div class="gv"><span class="gv-lbl">Grade V <span style="opacity:.6;font-size:11px">(2.5×)</span></span><span class="gv-val">${vr(it,2.5)}</span></div>`;
     return`<div class="row${isFav?" fav":""}" id="r-${it.id}">
 <button class="rbtn" onclick="tog('${it.id}')">
   <span class="ch"></span>
