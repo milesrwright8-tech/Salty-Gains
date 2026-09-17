@@ -1,0 +1,10 @@
+{
+  "buildCommand": "pnpm --filter @workspace/sot-treasure run build",
+  "outputDirectory": "artifacts/sot-treasure/dist/public",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
